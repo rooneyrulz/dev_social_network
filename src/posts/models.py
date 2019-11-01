@@ -25,7 +25,7 @@ class Post(models.Model):
     null=True
   )
 
-  objects = PostManager
+  objects = PostManager()
 
   def __str__(self, *args, **kwargs):
     return self.title
