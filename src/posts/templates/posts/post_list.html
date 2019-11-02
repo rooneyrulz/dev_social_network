@@ -1,6 +1,60 @@
+{% extends 'base.html' %}
+
 {% block content %}
-<h1>Posts List...</h1>
-{% for post in posts %}
-  <p>{{post.title}}</p>
-{% endfor %}
+<div class="post-list">
+  <header class="page-header"
+    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+    <h3 class="page-heading">Posts</h3>
+    {% if user.is_authenticated %}
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modelId">
+      New Post!
+    </button>
+    {% endif %}
+  </header>
+  <br>
+  {% if not posts.exists %}
+  <p class="lead text-muted">No posts added yet..</p>
+  {% else %}
+  {% for post in posts %}
+  <div class="card my-2">
+    <div class="card-body text-center">
+      <p class="card-title lead m-0">{{post.title}}</p>
+      <br>
+      <div class="section-center">
+        <a href="#" class="btn">Like</a>
+        <a href="#" class="btn">Unlike</a>
+      </div>
+      <br>
+      <div class="section-bottom">
+        <a href="#" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="POST"> {% csrf_token %}
+          <div class="modal-body">
+            {{ form.as_p }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
