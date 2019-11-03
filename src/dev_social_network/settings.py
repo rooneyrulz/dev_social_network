@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Own Apps
     'pages.apps.PagesConfig',
     'posts.apps.PostsConfig',
+    'accounts.apps.AccountsConfig',
 
     #Third Party Apps
     'crispy_forms'

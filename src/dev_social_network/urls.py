@@ -8,6 +8,10 @@ urlpatterns = [
     ),
     path(
         '',
+        include('accounts.urls', namespace='accounts')
+    ),
+    path(
+        '',
         include('posts.urls', namespace='posts')
     ),
     path('admin/', admin.site.urls),
