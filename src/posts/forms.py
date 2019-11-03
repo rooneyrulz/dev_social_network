@@ -3,6 +3,23 @@ from .models import Post
 
 
 class PostForm(forms.ModelForm):
+  title = forms.CharField(
+    widget=forms.TextInput(
+      attrs={
+        'placeholder': 'Enter Title'
+      }
+    )
+  )
+
+  description = forms.CharField(
+    widget=forms.Textarea(
+      attrs={
+        'placeholder': 'Enter Description',
+        'rows': 3
+      }
+    )
+  )
+
   class Meta:
     model = Post
     fields = ('title', 'description',)
