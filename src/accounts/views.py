@@ -7,6 +7,7 @@ from django.contrib import messages
 from .forms import RegisterForm, LoginForm
 
 
+# REGISTRATION VIEW
 class RegisterView(CreateView):
   model = User
   form_class = RegisterForm
@@ -23,6 +24,7 @@ class RegisterView(CreateView):
     return context
 
 
+# LOGIN VIEW
 class LoginView(View):
   form = LoginForm
   template_name = 'accounts/login.html'

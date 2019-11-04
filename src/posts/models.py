@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 
 
+# POST MANAGER
 class PostManager(models.Manager):
   def get_posts(self, *args, **kwargs):
     return self.all()
@@ -14,6 +15,7 @@ class PostManager(models.Manager):
     return self.filter(owner=owner)
 
 
+# POST MODEL
 class Post(models.Model):
   title = models.CharField(max_length=100)
   description = models.TextField()
@@ -31,6 +33,7 @@ class Post(models.Model):
     return self.title
 
 
+# LIKE MODEL
 class Like(models.Model):
   post = models.ForeignKey(
     Post,
@@ -47,6 +50,7 @@ class Like(models.Model):
     return self.post
 
 
+# UNLIKE MODEL
 class Unlike(models.Model):
   post = models.ForeignKey(
     Post,
@@ -63,6 +67,7 @@ class Unlike(models.Model):
     return self.post
 
 
+# COMMENT MODEL
 class Comment(models.Model):
   text = models.TextField(default="awesome!")
   post = models.ForeignKey(
