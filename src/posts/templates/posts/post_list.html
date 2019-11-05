@@ -22,12 +22,12 @@
       <p class="card-title lead m-0">{{post.title}}</p>
       <br>
       <div class="section-center">
-        <a href="#" class="btn">Like</a>
-        <a href="#" class="btn">Unlike</a>
+        <a href="{{post.get_like_url}}" class="btn">Like {{post.like_set.all|length}}</a>
+        <a href="#" class="btn">Unlike {{post.unlike_set.all|length}}</a>
       </div>
       <br>
       <div class="section-bottom">
-        <a href="#" class="btn btn-primary">Comments</a>
+        <a href="{{post.get_absolute_url}}" class="btn btn-primary">Explore {{post.comment_set.all|length}}</a>
       </div>
     </div>
   </div>

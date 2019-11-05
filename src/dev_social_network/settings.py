@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'posts.apps.PostsConfig',
     'accounts.apps.AccountsConfig',
+    'likes.apps.LikesConfig',
+    'unlikes.apps.UnlikesConfig',
+    'comments.apps.CommentsConfig',
 
     #Third Party Apps
     'crispy_forms'

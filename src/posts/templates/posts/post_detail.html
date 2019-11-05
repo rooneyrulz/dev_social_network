@@ -3,6 +3,18 @@
 {% block content %}
 <div class="post-list">
   <h3 class="page-heading">Post Detail</h3>
-  <p>{{post.like_set.all | length}}</p>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">{{post.title}}</h4>
+      <p class="card-text">{{post.description}}</p>
+      <p class="card-text">{{post.owner}}</p>
+      <form action="" class="">
+        <div class="form-group">
+          <input type="text" class="form-control mb-2" placeholder="Enter your comment..">
+          <button type="submit" class="btn btn-info">Comment</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock content %}

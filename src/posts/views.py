@@ -37,9 +37,10 @@ class PostListView(View):
 class PostDetailView(DetailView):
   queryset = Post.objects.all()
   context_object_name = 'post'
+  lookup = 'id'
   
   def get_object(self, *args, **kwargs):
-    return get_object_or_404(Post, pk=self.kwargs.get('id'))
+    return get_object_or_404(Post, pk=self.kwargs.get(self.lookup))
 
 
 # POST UPDATE VIEW
@@ -48,10 +49,11 @@ class PostUpdateView(UpdateView):
   form_class = PostForm
   context_object_name = 'post'
   template_name = 'posts/post_update.html'
+  lookup = 'id'
 
   def get_object(self, *args, **kwargs):
     return Post.objects.get_user_post(
-      self.kwargs.get('id'),
+      self.kwargs.get(self.lookup),
       self.request.user
     )
 
@@ -66,10 +68,11 @@ class PostDeleteView(DeleteView):
   queryset = Post.objects.all()
   context_object_name = 'post'
   template_name = 'posts/post_delete.html'
+  lookup = 'id'
 
   def get_object(self, *args, **kwargs):
     return Post.objects.get_user_post(
-      self.kwargs.get('id'),
+      self.kwargs.get(self.lookup),
       self.request.user
     )
   

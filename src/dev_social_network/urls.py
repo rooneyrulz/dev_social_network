@@ -14,5 +14,9 @@ urlpatterns = [
         '',
         include('posts.urls', namespace='posts')
     ),
+    path(
+        '',
+        include('likes.urls', namespace='likes')
+    ),
     path('admin/', admin.site.urls),
 ]

@@ -39,54 +39,5 @@ class Post(models.Model):
   def get_absolute_url(self, *args, **kwargs):
     return reverse('posts:posts-detail', kwargs={'id': self.pk})
 
-
-# LIKE MODEL
-class Like(models.Model):
-  post = models.ForeignKey(
-    Post,
-    default=1,
-    on_delete=models.CASCADE
-  )
-  owner = models.ForeignKey(
-    settings.AUTH_USER_MODEL,
-    default=1,
-    on_delete=models.CASCADE
-  )
-
-  def __str__(self, *args, **kwargs):
-    return self.post
-
-
-# UNLIKE MODEL
-class Unlike(models.Model):
-  post = models.ForeignKey(
-    Post,
-    default=1,
-    on_delete=models.CASCADE
-  )
-  owner = models.ForeignKey(
-    settings.AUTH_USER_MODEL,
-    default=1,
-    on_delete=models.CASCADE
-  )
-
-  def __str__(self, *args, **kwargs):
-    return self.post
-
-
-# COMMENT MODEL
-class Comment(models.Model):
-  text = models.TextField(default="awesome!")
-  post = models.ForeignKey(
-    Post,
-    default=1,
-    on_delete=models.CASCADE
-  )
-  owner = models.ForeignKey(
-    settings.AUTH_USER_MODEL,
-    default=1,
-    on_delete=models.CASCADE
-  )
-
-  def __str__(self, *args, **kwargs):
-    return self.post
+  def get_like_url(self, *args, **kwargs):
+    return reverse('likes:post-likes', kwargs={'id': self.pk})
