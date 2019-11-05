@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib import messages
 from django.views.generic import View, DetailView, UpdateView, DeleteView
 
@@ -43,10 +44,40 @@ class PostDetailView(DetailView):
 
 # POST UPDATE VIEW
 class PostUpdateView(UpdateView):
-  pass
+  queryset = Post.objects.all()
+  form_class = PostForm
+  context_object_name = 'post'
+  template_name = 'posts/post_update.html'
+
+  def get_object(self, *args, **kwargs):
+    return Post.objects.get_user_post(
+      self.kwargs.get('id'),
+      self.request.user
+    )
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(PostUpdateView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Post Update'
+    return context
 
 
 # POST DELETE VIEW
 class PostDeleteView(DeleteView):
-  pass
+  queryset = Post.objects.all()
+  context_object_name = 'post'
+  template_name = 'posts/post_delete.html'
 
+  def get_object(self, *args, **kwargs):
+    return Post.objects.get_user_post(
+      self.kwargs.get('id'),
+      self.request.user
+    )
+  
+  def get_context_data(self, *args, **kwargs):
+    context = super(PostDeleteView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Post Delete'
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, 'Post has been deleted!')
+    return reverse('posts:posts-list')

@@ -1,5 +1,6 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.conf import settings
 
 
@@ -13,6 +14,9 @@ class PostManager(models.Manager):
 
   def get_user_posts(self, owner, *args, **kwargs):
     return self.filter(owner=owner)
+
+  def get_user_post(self, post_id, user, *args, **kwargs):
+    return get_object_or_404(self, pk=post_id, owner=user)
 
 
 # POST MODEL
@@ -31,6 +35,9 @@ class Post(models.Model):
 
   def __str__(self, *args, **kwargs):
     return self.title
+
+  def get_absolute_url(self, *args, **kwargs):
+    return reverse('posts:posts-detail', kwargs={'id': self.pk})
 
 
 # LIKE MODEL
