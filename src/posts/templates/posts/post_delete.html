@@ -3,11 +3,18 @@
 {% block content %}
 <div class="post-delete">
   <h3 class="page-heading">Delete Post</h3>
-  <form action="" method="POST"> {% csrf_token %}
-    <p class="lead">
-      {{ post.title }}
-    </p>
-    <button type="submit" class="btn btn-info">Delete</button>
-  </form>
+  <div class="card">
+    <div class="card-header">
+      <h5>Are you sure? You wanna delete this post?</h5>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">{{post.title}}</h4>
+      <p class="card-text">{{post.description}}</p>
+      <form action="" method="POST"> {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes</button>
+        <a href="{{post.get_absolute_url}}" type="button" class="btn btn-dark">No</a>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock content %}

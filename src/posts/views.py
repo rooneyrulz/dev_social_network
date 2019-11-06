@@ -25,7 +25,9 @@ class PostListView(View):
   def post(self, request, *args, **kwargs):
     form = self.form(request.POST)
     if form.is_valid():
-      form.save()
+      instance = form.save(commit=False)
+      instance.owner = self.request.user
+      instance.save()
       messages.success(request, 'Post has been added to feed!')
       return redirect('/posts')
     messages.error(request, 'Oop! Enter valid details!')

@@ -1,19 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="post-list">
+<div class="post-detail">
   <h3 class="page-heading">Post Detail</h3>
   <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">{{post.title}}</h4>
-      <p class="card-text">{{post.description}}</p>
-      <p class="card-text">{{post.owner}}</p>
+    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center"
+      class="card-body">
+      <div class="card-left">
+        <h4 class="card-title">{{post.title}}</h4>
+        <p class="card-text">{{post.description}}</p>
+        <p class="card-text">{{post.owner}}</p>
+      </div>
       <form action="" class="">
-        <div class="form-group">
-          <input type="text" class="form-control mb-2" placeholder="Enter your comment..">
-          <button type="submit" class="btn btn-info">Comment</button>
-        </div>
+        {% if user.is_authenticated %}
+        <a href="{{post.get_comment_create_url}}" type="button" class="btn btn-info">Comment</a>
+        {% endif %}
+        {% if user.is_authenticated and post.owner == user %}
+        <a href="{{post.get_delete_url}}" type="submit" class="btn btn-danger">Delete</a>
+        {% endif %}
       </form>
+    </div>
+    <div class="card-body">
+      <h4>Comments List</h4>
+      <hr>
+      {% for comment in post.comment_set.all %}
+      <li style="display: flex; flex-direction: row; justify-content: space-between; align-items: center"
+        class="list-group-item mb-2">
+        <div>
+          <span class="">{{comment.text}}</span><br>
+          <small>{{comment.owner}}</small>
+        </div>
+        {% if comment.owner == user %}
+        <form action="" class="">
+          <a href="" class="btn btn-sm btn-info">Edit</a>
+          <a href="" class="btn btn-sm btn-danger">Delete</a>
+        </form>
+        {% endif %}
+      </li>
+      {% endfor %}
     </div>
   </div>
 </div>

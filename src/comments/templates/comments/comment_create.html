@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="post-list">
+  <h3 class="page-heading">Create Comments</h3>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">{{post.title}}</h3>
+      <p class="card-text">{{post.description}}</p>
+      <p class="card-text">{{post.owner}}</p>
+      <hr>
+      <form action="" method="POST"> {% csrf_token %}
+        <div class="form-group">
+          {{form | crispy}}
+        </div>
+        <button type="submit" class="btn btn-success">Add Comment</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

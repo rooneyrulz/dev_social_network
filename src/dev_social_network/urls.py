@@ -22,5 +22,9 @@ urlpatterns = [
         '',
         include('unlikes.urls', namespace='unlikes')
     ),
+    path(
+        '',
+        include('comments.urls', namespace='comments')
+    ),
     path('admin/', admin.site.urls),
 ]
