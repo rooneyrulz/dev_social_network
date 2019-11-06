@@ -10,6 +10,10 @@ from posts.models import Post
 class UnlikeManager(models.Manager):
   def find_is_unliked(self, post, user):
     return self.filter(post=post, owner=user)
+  
+  def create_unlike(self, post, user):
+    unlike = self.create(post=post, owner=user)
+    unlike.save()
 
 
 # UNLIKE MODEL

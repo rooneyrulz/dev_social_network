@@ -30,7 +30,6 @@ class PostListView(View):
       return redirect('/posts')
     messages.error(request, 'Oop! Enter valid details!')
     return redirect('/posts')
-    # return render(request, self.template_name, self.context)
 
 
 # POST DETAIL VIEW

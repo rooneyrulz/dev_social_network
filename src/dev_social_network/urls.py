@@ -18,5 +18,9 @@ urlpatterns = [
         '',
         include('likes.urls', namespace='likes')
     ),
+    path(
+        '',
+        include('unlikes.urls', namespace='unlikes')
+    ),
     path('admin/', admin.site.urls),
 ]

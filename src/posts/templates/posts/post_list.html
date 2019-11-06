@@ -23,7 +23,7 @@
       <br>
       <div class="section-center">
         <a href="{{post.get_like_url}}" class="btn">Like {{post.like_set.all|length}}</a>
-        <a href="#" class="btn">Unlike {{post.unlike_set.all|length}}</a>
+        <a href="{{post.get_unlike_url}}" class="btn">Unlike {{post.unlike_set.all|length}}</a>
       </div>
       <br>
       <div class="section-bottom">

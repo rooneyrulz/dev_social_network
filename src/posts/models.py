@@ -41,3 +41,6 @@ class Post(models.Model):
 
   def get_like_url(self, *args, **kwargs):
     return reverse('likes:post-likes', kwargs={'id': self.pk})
+  
+  def get_unlike_url(self, *args, **kwargs):
+    return reverse('unlikes:post-unlikes', kwargs={'id': self.pk})
