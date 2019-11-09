@@ -69,3 +69,39 @@ class CommentDeleteView(DeleteView):
       'posts:posts-detail',
       kwargs={'id': self.get_object().post.pk}
     )
+
+
+class CommentUpdateView(UpdateView):
+  queryset = Comment.objects.all()
+  form_class = CommentForm
+  template_name = 'comments/comment_update.html'
+
+  def get_object(self, *args, **kwargs):
+    return Comment.objects.get_comment(
+      self.kwargs.get('post_id'),
+      self.kwargs.get('comment_id'),
+      self.request.user
+    )
+  
+  def form_valid(self, form):
+    print(form.instance)
+    if self.get_object():
+      return super(CommentUpdateView, self).form_valid(form)
+  
+  def get_context_data(self, *args, **kwargs):
+    context = super(
+      CommentUpdateView, self
+    ).get_context_data(*args, **kwargs)
+    context['title'] = 'Update Comment'
+    context['comment'] = self.get_object()
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(
+      self.request,
+      'Comment has been updated successfully!'
+    )
+    return reverse(
+      'posts:posts-detail',
+      kwargs={'id': self.get_object().post.pk}
+    )

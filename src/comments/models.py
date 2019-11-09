@@ -36,4 +36,10 @@ class Comment(models.Model):
       'comments:comments-delete',
       kwargs={'post_id': self.post.pk, 'comment_id': self.pk}
     )
+
+  def get_update_url(self, *args, **kwargs):
+    return reverse(
+      'comments:comments-update',
+      kwargs={'post_id': self.post.pk, 'comment_id': self.pk}
+    )
   

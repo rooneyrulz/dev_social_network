@@ -32,7 +32,7 @@
         </div>
         {% if comment.owner == user %}
         <form action="" class="">
-          <a href="" class="btn btn-sm btn-info">Edit</a>
+          <a href="{{comment.get_update_url}}" class="btn btn-sm btn-info">Edit</a>
           <a href="{{comment.get_delete_url}}" class="btn btn-sm btn-danger">Delete</a>
         </form>
         {% endif %}
