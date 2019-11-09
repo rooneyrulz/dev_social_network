@@ -8,7 +8,7 @@ from posts.models import Post
 from .forms import CommentForm
 
 
-class CreateCommentView(UpdateView):
+class CreateCommentView(CreateView):
   queryset = Comment.objects.all()
   form_class = CommentForm
   template_name = 'comments/comment_create.html'
@@ -24,7 +24,7 @@ class CreateCommentView(UpdateView):
     if self.get_object():
       form.instance.post = self.get_object()
       form.instance.owner = self.request.user
-      return super().form_valid(form)
+      return super(CreateCommentView, self).form_valid(form)
 
   def get_context_data(self, *args, **kwargs):
     context = super(
@@ -36,5 +36,5 @@ class CreateCommentView(UpdateView):
 
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Comment has been added!')
-    return redirect(self.get_object().get_absolute_url())
+    return reverse('posts:posts-detail', kwargs={'id': self.get_object().pk})
   
