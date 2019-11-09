@@ -1,14 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.urls import reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from .models import Comment
 from posts.models import Post
 from .forms import CommentForm
 
 
-class CreateCommentView(CreateView):
+# COMMENT CREATE VIEW
+class CommentCreateView(CreateView):
   queryset = Comment.objects.all()
   form_class = CommentForm
   template_name = 'comments/comment_create.html'
@@ -24,11 +25,11 @@ class CreateCommentView(CreateView):
     if self.get_object():
       form.instance.post = self.get_object()
       form.instance.owner = self.request.user
-      return super(CreateCommentView, self).form_valid(form)
+      return super(CommentCreateView, self).form_valid(form)
 
   def get_context_data(self, *args, **kwargs):
     context = super(
-      CreateCommentView, self
+      CommentCreateView, self
     ).get_context_data(*args, **kwargs)
     context['title'] = 'Comment Create'
     context['post'] = self.get_object()
@@ -37,4 +38,34 @@ class CreateCommentView(CreateView):
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Comment has been added!')
     return reverse('posts:posts-detail', kwargs={'id': self.get_object().pk})
+
+
+# COMMENT DELETE VIEW
+class CommentDeleteView(DeleteView):
+  queryset = Comment.objects.all()
+  context_object_name = 'comment'
+  template_name = 'comments/comment_delete.html'
+
+  def get_object(self, *args, **kwargs):
+    return Comment.objects.get_comment(
+      self.kwargs.get('post_id'),
+      self.kwargs.get('comment_id'),
+      self.request.user
+    )
   
+  def get_context_data(self, *args, **kwargs):
+    context = super(
+      CommentDeleteView, self
+    ).get_context_data(*args, **kwargs)
+    context['title'] = 'Delete Comment'
+    return context
+  
+  def get_success_url(self, *args, **kwargs):
+    messages.success(
+      self.request,
+      'Comment has been deleted successfully!'
+    )
+    return reverse(
+      'posts:posts-detail',
+      kwargs={'id': self.get_object().post.pk}
+    )
