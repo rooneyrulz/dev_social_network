@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View, DetailView, UpdateView, DeleteView
 
 from .models import Post
@@ -45,7 +46,7 @@ class PostDetailView(DetailView):
 
 
 # POST UPDATE VIEW
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
   queryset = Post.objects.all()
   form_class = PostForm
   context_object_name = 'post'
@@ -65,7 +66,7 @@ class PostUpdateView(UpdateView):
 
 
 # POST DELETE VIEW
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
   queryset = Post.objects.all()
   context_object_name = 'post'
   template_name = 'posts/post_delete.html'

@@ -5,20 +5,32 @@
       aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        {% if user.is_authenticated %}
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="/dashboard">Dashboard</a>
         </li>
+        {% else %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/home">Home</a>
+        </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="/posts">Posts</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        {% else %}
         <li class="nav-item active">
           <a class="nav-link" href="/register">Register</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/login">Login</a>
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
 
 from .models import Comment
@@ -9,7 +10,7 @@ from .forms import CommentForm
 
 
 # COMMENT CREATE VIEW
-class CommentCreateView(CreateView):
+class CommentCreateView(LoginRequiredMixin, CreateView):
   queryset = Comment.objects.all()
   form_class = CommentForm
   template_name = 'comments/comment_create.html'
@@ -41,7 +42,7 @@ class CommentCreateView(CreateView):
 
 
 # COMMENT DELETE VIEW
-class CommentDeleteView(DeleteView):
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
   queryset = Comment.objects.all()
   context_object_name = 'comment'
   template_name = 'comments/comment_delete.html'
@@ -71,7 +72,8 @@ class CommentDeleteView(DeleteView):
     )
 
 
-class CommentUpdateView(UpdateView):
+# COMMENT UPDATE VIEW
+class CommentUpdateView(LoginRequiredMixin, UpdateView):
   queryset = Comment.objects.all()
   form_class = CommentForm
   template_name = 'comments/comment_update.html'

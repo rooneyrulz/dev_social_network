@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 
 from posts.models import Post
@@ -9,7 +10,7 @@ from unlikes.models import Unlike
 
 
 # POST LIKE VIEW
-class PostLikeView(View):
+class PostLikeView(LoginRequiredMixin, View):
   lookup = 'id'
 
   def get_object(self, *args, **kwargs):

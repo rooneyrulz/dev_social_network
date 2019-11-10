@@ -1,5 +1,4 @@
 from django.urls import path
-from django.contrib.auth.decorators import login_required
 from .views import IndexView, DashboardView, AboutView
 
 app_name = 'pages'
@@ -11,7 +10,7 @@ urlpatterns = [
     ),
     path(
         'dashboard/',
-        login_required(DashboardView.as_view()),
+        DashboardView.as_view(),
         name='dashboard-view'
     ),
     path(
