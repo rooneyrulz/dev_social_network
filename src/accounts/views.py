@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.generic import View, CreateView
 from django.contrib import messages
+from django.urls import reverse
 
 from .forms import RegisterForm, LoginForm
 
@@ -55,4 +56,10 @@ class LoginView(View):
     self.context['title'] = 'Login'
     self.context['form'] = form
     return render(request, self.template_name, self.context)
-      
+
+
+class LogoutView(View):
+  def get(self, request, *args, **kwargs):
+    logout(request)
+    messages.success(request, 'You has been logged out successfully!')
+    return redirect(reverse('accounts:accounts-login'))
