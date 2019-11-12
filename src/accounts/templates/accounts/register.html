@@ -2,14 +2,18 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="accounts-register">
+<div class="accounts accounts-register">
   <header class="page-header">
     <h3 class="page-heading">Register</h3>
   </header>
-  <br>
+  <hr>
   <form action="" method="POST"> {% csrf_token %}
     {{form|crispy}}
-    <button class="btn btn-primary" type="submit">Register</button>
+    <button class="btn btn-lg btn-primary" type="submit">Register</button>
   </form>
+  <br>
+  <p class="text-center text-muted">
+    <small>If you already have an account, Let's <a href="/dev/accounts/login">sign in</a> here</small>
+  </p>
 </div>
 {% endblock content %}

@@ -12,22 +12,22 @@
     </button>
     {% endif %}
   </header>
-  <br>
+  <hr>
   {% if not posts.exists %}
   <p class="lead text-muted">No posts added yet..</p>
   {% else %}
   {% for post in posts %}
-  <div class="card my-2">
-    <div class="card-body text-center">
-      <p class="card-title lead m-0">{{post.title}}</p>
-      <br>
-      <div class="section-center">
-        <a href="{{post.get_like_url}}" class="btn">Like {{post.like_set.all|length}}</a>
-        <a href="{{post.get_unlike_url}}" class="btn">Unlike {{post.unlike_set.all|length}}</a>
+  <div class="card card-posts my-2">
+    <div class="card-body">
+      <div class="card-left">
+        <p class="lead m-0">{{post.title}}</p>
+        <small class="text-muted">Author: {{post.owner}}</small>
       </div>
-      <br>
-      <div class="section-bottom">
-        <a href="{{post.get_absolute_url}}" class="btn btn-primary">Explore {{post.comment_set.all|length}}</a>
+      <div class="card-right">
+        <a href="{{post.get_like_url}}" class="btn btn-sm">Like {{post.like_set.all|length}}</a>
+        <a href="{{post.get_unlike_url}}" class="btn btn-sm">Unlike {{post.unlike_set.all|length}}</a>
+        <a href="{{post.get_absolute_url}}" class="btn btn-outline-primary ml-3">Explore
+          {{post.comment_set.all|length}}</a>
       </div>
     </div>
   </div>

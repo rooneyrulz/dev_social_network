@@ -11,3 +11,15 @@ body {
   font-size: 1rem;
   overflow-x: hidden;
 }
+
+.accounts {
+  width: 60%;
+  margin: auto;
+}
+
+.post-list .card-posts .card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -30,9 +30,9 @@ class PostListView(View):
       instance.owner = self.request.user
       instance.save()
       messages.success(request, 'Post has been added to feed!')
-      return redirect('/posts')
+      return redirect('posts:posts-list')
     messages.error(request, 'Oop! Enter valid details!')
-    return redirect('/posts')
+    return reverse('posts:posts-list')
 
 
 # POST DETAIL VIEW

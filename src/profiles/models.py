@@ -45,7 +45,7 @@ class Profile(models.Model):
     default=1,
     choices=STATUS_CHOICES
   )
-  website = models.URLField(max_length=283)
+  website = models.URLField(max_length=283, blank=True, null=True)
   company = models.CharField(max_length=120)
   profession = models.CharField(
     max_length=120,
@@ -61,3 +61,7 @@ class Profile(models.Model):
     blank=True
   )
   created_at = models.DateTimeField(auto_now_add=True)
+
+
+  def __str__(self, *args, **kwargs):
+    return self.name

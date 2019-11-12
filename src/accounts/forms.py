@@ -7,6 +7,7 @@ class RegisterForm(forms.ModelForm):
   username = forms.CharField(
     widget=forms.TextInput(
       attrs={
+        'class': 'form-control form-control-lg',
         'placeholder': 'Enter Username'
       }
     )
@@ -15,6 +16,7 @@ class RegisterForm(forms.ModelForm):
   email = forms.EmailField(
     widget=forms.EmailInput(
       attrs={
+        'class': 'form-control form-control-lg',
         'placeholder': 'Enter Email Id'
       }
     )
@@ -23,6 +25,7 @@ class RegisterForm(forms.ModelForm):
   password = forms.CharField(
     widget=forms.PasswordInput(
       attrs={
+        'class': 'form-control form-control-lg',
         'placeholder': 'Enter Password'
       }
     )
@@ -45,6 +48,7 @@ class LoginForm(forms.Form):
   username = forms.CharField(
     widget=forms.TextInput(
       attrs={
+        'class': 'form-control form-control-lg',
         'placeholder': 'Enter username'
       }
     )
@@ -52,6 +56,7 @@ class LoginForm(forms.Form):
   password = forms.CharField(
     widget=forms.PasswordInput(
       attrs={
+        'class': 'form-control form-control-lg',
         'placeholder': 'Enter Password'
       }
     )
