@@ -16,8 +16,10 @@
 
 <body style="font-family: Poppins; font-weight: 400">
   {% include "layouts/navbar.html" %}
+  {% if messages %}
   {% include "layouts/alert.html" %}
-  <div class="container my-5">
+  {% endif %}
+  <div class="container my-4">
     {% block content %}
     <p class="lead">Contents not found...!</p>
     {% endblock content %}

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'likes.apps.LikesConfig',
     'unlikes.apps.UnlikesConfig',
     'comments.apps.CommentsConfig',
+    'profiles.apps.ProfilesConfig',
 
     #Third Party Apps
     'crispy_forms'

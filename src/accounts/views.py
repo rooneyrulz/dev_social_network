@@ -13,7 +13,7 @@ class RegisterView(CreateView):
   model = User
   form_class = RegisterForm
   template_name = 'accounts/register.html'
-  success_url = '/login'
+  success_url = '/dev/accounts/login'
 
   def form_valid(self, form):
     messages.success(self.request, 'User has been registered successfully!')
@@ -51,7 +51,7 @@ class LoginView(View):
       if self.next_uri:
         return redirect(self.next)
       else:
-        return redirect('/dashboard')
+        return redirect('/dev/dashboard')
     
     self.context['title'] = 'Login'
     self.context['form'] = form
