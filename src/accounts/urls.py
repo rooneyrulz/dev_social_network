@@ -5,17 +5,17 @@ from .views import RegisterView, LoginView, LogoutView
 app_name = 'accounts'
 urlpatterns = [
     path(
-        'register',
+        'register/',
         RegisterView.as_view(),
         name='accounts-register'
     ),
     path(
-        'login',
+        'login/',
         LoginView.as_view(),
         name='accounts-login'
     ),
     path(
-        'logout',
+        'logout/',
         LogoutView.as_view(),
         name='accounts-logout'
     ),

@@ -12,7 +12,7 @@
         <p class="card-text">{{comment.text}}</p>
         <hr>
         <button type="submit" class="btn btn-danger">Yes</button>
-        <a href="" type="button" class="btn btn-dark">No</a>
+        <a href="{{comment.post.get_absolute_url}}" type="button" class="btn btn-dark">No</a>
       </form>
     </div>
   </div>

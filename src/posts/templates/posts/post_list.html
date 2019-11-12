@@ -3,8 +3,7 @@
 
 {% block content %}
 <div class="post-list">
-  <header class="page-header"
-    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+  <header class="page-header d-flex">
     <h3 class="page-heading">Posts</h3>
     {% if user.is_authenticated %}
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modelId">
@@ -18,7 +17,7 @@
   {% else %}
   {% for post in posts %}
   <div class="card card-posts my-2">
-    <div class="card-body">
+    <div class="card-body d-flex">
       <div class="card-left">
         <p class="lead m-0">{{post.title}}</p>
         <small class="text-muted">Author: {{post.owner}}</small>

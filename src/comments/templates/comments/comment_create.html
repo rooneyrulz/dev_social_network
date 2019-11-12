@@ -5,16 +5,19 @@
 <div class="post-list">
   <h3 class="page-heading">Create Comments</h3>
   <div class="card">
+    <div class="card-header">
+      <h4 class="card-title m-0">{{post.title}}</h4>
+    </div>
     <div class="card-body">
-      <h3 class="card-title">{{post.title}}</h3>
-      <p class="card-text">{{post.description}}</p>
-      <p class="card-text">{{post.owner}}</p>
+      <p class="card-text">Description: {{post.description}}</p>
+      <p class="card-text">Author: {{post.owner}}</p>
+      <p class="card-text">Create At: {{post.created_at}}</p>
       <hr>
       <form action="" method="POST"> {% csrf_token %}
         <div class="form-group">
           {{form | crispy}}
         </div>
-        <button type="submit" class="btn btn-success">Add Comment</button>
+        <button type="submit" class="btn btn-lg btn-success">Add Comment</button>
       </form>
     </div>
   </div>

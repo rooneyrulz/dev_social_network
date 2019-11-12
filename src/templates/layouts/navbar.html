@@ -6,11 +6,11 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         {% if user.is_authenticated %}
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/dev/dashboard">Dashboard</a>
         </li>
         {% else %}
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/dev/home">Home</a>
         </li>
         {% endif %}
@@ -24,7 +24,7 @@
           <a class="nav-link" href="/dev/accounts/logout">Logout</a>
         </li>
         {% else %}
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/dev/accounts/register">Register</a>
         </li>
         <li class="nav-item">
