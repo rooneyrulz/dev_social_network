@@ -3,32 +3,32 @@ from django.conf import settings
 
 
 GENDER_CHOICES = [
-  ('M', 'Male'),
-  ('F', 'Female')
+  ('Male', 'Male'),
+  ('Female', 'Female')
 ]
 
 STATUS_CHOICES = [
-  ('M', 'Married'),
-  ('S', 'Single')
+  ('Married', 'Married'),
+  ('Single', 'Single')
 ]
 
 PROFESSION_CHOICES = [
-  ('S/L', 'Student or Learning'),
-  ('JD', 'Junior Developer'),
-  ('SD', 'Senior Developer'),
-  ('D', 'Developer'),
-  ('M', 'Manager'),
-  ('I/T', 'Instructor or Teacher'),
-  ('I', 'Intern'),
-  ('B', 'Bussiness Man'),
-  ('DM', 'Digital Marketer'),
-  ('DS', 'Data Scientist'),
-  ('O', 'Other')
+  ('Student or Learning', 'Student or Learning'),
+  ('Junior Developer', 'Junior Developer'),
+  ('Senior Developer', 'Senior Developer'),
+  ('Developer', 'Developer'),
+  ('Manager', 'Manager'),
+  ('Instructor or Teacher', 'Instructor or Teacher'),
+  ('Intern', 'Intern'),
+  ('ussiness Man', 'Bussiness Man'),
+  ('Digital Marketer', 'Digital Marketer'),
+  ('Data Scientist', 'Data Scientist'),
+  ('Other', 'Other')
 ]
 
 
 class Profile(models.Model):
-  user = models.ForeignKey(
+  user = models.OneToOneField(
     settings.AUTH_USER_MODEL,
     default=1,
     on_delete=models.CASCADE
@@ -65,3 +65,18 @@ class Profile(models.Model):
 
   def __str__(self, *args, **kwargs):
     return self.name
+
+
+# EDUCATION MODEL
+class Education(models.Model):
+  pass
+
+
+# EXPERIENCES MODEL
+class Experience(models.Model):
+  pass
+
+
+# SOCIAL MODEL
+class Social(models.Model):
+  pass

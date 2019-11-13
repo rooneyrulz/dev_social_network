@@ -4,6 +4,7 @@ from django.views.generic import View, ListView
 from .models import Profile
 
 
+# PROFILE LIST VIEW
 class ProfileListView(ListView):
   queryset = Profile.objects.all()
   context_object_name = 'profiles'

@@ -1,6 +1,35 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 
 {% block content %}
-<h3>Developers</h3>
+<div class="profiles-list">
+  <header class="page-header d-flex">
+    <h3 class="page-heading">Developers</h3>
+    {% if user.is_authenticated and not user.profile %}
+    <a href="#" class="btn btn-primary">
+      Create Profile!
+    </a>
+    {% endif %}
+  </header>
+  <hr>
+  {% if not profiles.exists %}
+  <p class="lead text-muted">No profiles found yet..</p>
+  {% else %}
+  {% for profile in profiles %}
+  <div class="card card-posts my-2">
+    <div class="card-body d-flex">
+      <div class="card-left">
+        <p class="lead m-0">{{profile.name}}</p>
+        <small class="text-muted">From: {{profile.location}}</small>
+      </div>
+      <div class="card-center">
+        <p class="lead m-0 text-muted">{{profile.profession}}</p>
+      </div>
+      <div class="card-right">
+        <a href="" class="btn btn-outline-primary">Check</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
 {% endblock content %}
