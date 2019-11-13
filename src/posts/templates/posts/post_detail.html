@@ -19,6 +19,7 @@
         <a href="{{post.get_comment_create_url}}" type="button" class="btn btn-dark">Comment</a>
         {% endif %}
         {% if user.is_authenticated and post.owner == user %}
+        <a href="{{post.get_update_url}}" type="button" class="btn btn-info">Edit</a>
         <a href="{{post.get_delete_url}}" type="submit" class="btn btn-danger">Delete</a>
         {% endif %}
       </form>

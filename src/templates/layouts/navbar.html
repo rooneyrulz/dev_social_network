@@ -9,31 +9,34 @@
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="/dev/dashboard">Dashboard</a>
+          <a class="nav-link" href="{% url 'pages:dashboard-view' %}">Dashboard</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="/dev/home">Home</a>
+          <a class="nav-link" href="{% url 'pages:home-view' %}">Home</a>
         </li>
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link" href="/dev/profiles">Profiles</a>
+          <a class="nav-link" href="{% url 'profiles:profiles-list' %}">Profiles</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dev/posts">Posts</a>
+          <a class="nav-link" href="{% url 'posts:posts-list' %}">Posts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pages:about-view' %}">About</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
         {% if user.is_authenticated %}
         <li class="nav-item active">
-          <a class="nav-link" href="/dev/accounts/logout">Logout</a>
+          <a class="nav-link" href="{% url 'accounts:accounts-logout' %}">Logout</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="/dev/accounts/register">Register</a>
+          <a class="nav-link" href="{% url 'accounts:accounts-register' %}">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dev/accounts/login">Login</a>
+          <a class="nav-link" href="{% url 'accounts:accounts-login' %}">Login</a>
         </li>
         {% endif %}
       </ul>

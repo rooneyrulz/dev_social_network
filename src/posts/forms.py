@@ -6,6 +6,7 @@ class PostForm(forms.ModelForm):
   title = forms.CharField(
     widget=forms.TextInput(
       attrs={
+        'class': 'form-control form-control-lg',
         'placeholder': 'Enter Title'
       }
     )
@@ -14,6 +15,7 @@ class PostForm(forms.ModelForm):
   description = forms.CharField(
     widget=forms.Textarea(
       attrs={
+        'class': 'form-control form-control-lg',
         'placeholder': 'Enter Description',
         'rows': 3
       }

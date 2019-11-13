@@ -43,6 +43,11 @@ class PostDetailView(DetailView):
   
   def get_object(self, *args, **kwargs):
     return get_object_or_404(Post, pk=self.kwargs.get(self.lookup))
+  
+  def get_context_data(self, *args, **kwargs):
+    context = super(PostDetailView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Post Detail'
+    return context
 
 
 # POST UPDATE VIEW
@@ -63,6 +68,10 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     context = super(PostUpdateView, self).get_context_data(*args, **kwargs)
     context['title'] = 'Post Update'
     return context
+  
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, 'Post has been updated successfully!')
+    return reverse('posts:posts-detail', kwargs={'id': self.kwargs.get(self.lookup)})
 
 
 # POST DELETE VIEW

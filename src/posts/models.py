@@ -42,6 +42,9 @@ class Post(models.Model):
   def get_delete_url(self, *args, **kwargs):
     return reverse('posts:posts-delete', kwargs={'id': self.pk})
 
+  def get_update_url(self, *args, **kwargs):
+    return reverse('posts:posts-update', kwargs={'id': self.pk})
+
   def get_like_url(self, *args, **kwargs):
     return reverse('likes:post-likes', kwargs={'id': self.pk})
   

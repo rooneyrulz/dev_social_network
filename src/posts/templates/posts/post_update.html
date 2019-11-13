@@ -4,9 +4,11 @@
 {% block content %}
 <div class="post-update">
   <h3 class="page-heading">Update Post</h3>
+  <hr>
   <form action="" method="POST"> {% csrf_token %}
     {{form|crispy}}
-    <button type="submit" class="btn btn-info">Update</button>
+    <button type="submit" class="btn btn-lg btn-success">Update</button>
+    <a href="{{post.get_absolute_url}}" class="btn btn-lg btn-dark">Discard</a>
   </form>
 </div>
 {% endblock content %}

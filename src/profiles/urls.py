@@ -3,6 +3,6 @@ from .views import ProfileListView
 
 app_name = 'profiles'
 urlpatterns = [
-    path('', ProfileListView.as_view(), name='profile-list')
+    path('', ProfileListView.as_view(), name='profiles-list')
 ]
 
