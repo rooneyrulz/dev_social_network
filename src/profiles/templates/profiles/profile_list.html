@@ -5,7 +5,7 @@
   <header class="page-header d-flex">
     <h3 class="page-heading">Developers</h3>
     {% if user.is_authenticated and not user.profile %}
-    <a href="" class="btn btn-primary">
+    <a href="/dev/profiles/create/" class="btn btn-primary">
       Create Profile!
     </a>
     {% endif %}

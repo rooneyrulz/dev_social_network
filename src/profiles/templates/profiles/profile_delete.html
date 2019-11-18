@@ -6,5 +6,16 @@
     <h3 class="page-heading">Profile Delete</h3>
   </header>
   <hr>
+  <div class="card border-danger">
+    <div class="card-body">
+      <p class="lead">Do you wanna delete the profile?</p>
+      <form action="" method="POST">
+        <div class="btn-group">
+          <button type="submit" class="btn btn-danger">Yes</button>
+          <a href="{{profile.get_absolute_url}}" class="btn btn-dark">No</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock content %}

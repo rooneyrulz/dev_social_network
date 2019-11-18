@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     ProfileListView,
+    ProfileCreateView,
     ProfileDetailView,
     ProfileUpdateView,
     ProfileDeleteView
@@ -15,7 +16,7 @@ urlpatterns = [
     ),
     path(
         'create/',
-        ProfileListView.as_view(),
+        ProfileCreateView.as_view(),
         name='profiles-create'
     ),
     path(

@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.urls import reverse
 from datetime import datetime
@@ -39,6 +40,14 @@ DEGREE_CHOICES = [
 ]
 
 
+class ProfileManager(models.Manager):
+  def check_user_profile(self, user, *args, **kwargs):
+    return get_object_or_404(self, user=user)
+  
+  def get_auth_profile(self, profile, user, *args, **kwargs):
+    return get_object_or_404(self, pk=profile, user=user)
+
+
 class Profile(models.Model):
   user = models.OneToOneField(
     settings.AUTH_USER_MODEL,
@@ -73,6 +82,8 @@ class Profile(models.Model):
     blank=True
   )
   created_at = models.DateTimeField(auto_now_add=True)
+
+  objects = ProfileManager()
 
 
   def __str__(self, *args, **kwargs):
