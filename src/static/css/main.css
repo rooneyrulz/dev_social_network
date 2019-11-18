@@ -23,3 +23,10 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
+.d-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(1fr, 3);
+  justify-content: center;
+  align-items: center;
+}

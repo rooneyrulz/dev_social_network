@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from datetime import datetime
 
 
@@ -77,10 +78,22 @@ class Profile(models.Model):
   def __str__(self, *args, **kwargs):
     return self.name
 
+  def get_absolute_url(self, *args, **kwargs):
+    return reverse('profiles:profiles-detail', kwargs={'id':self.pk})
+
+  def get_create_url(self, *args, **kwargs):
+    return reverse('profiles:profiles-create')
+  
+  def get_update_url(self, *args, **kwargs):
+    return reverse('profiles:profiles-update', kwargs={'id':self.pk})
+
+  def get_delete_url(self, *args, **kwargs):
+    return reverse('profiles:profiles-delete', kwargs={'id':self.pk})
+
 
 # EDUCATION MODEL
 class Education(models.Model):
-  profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
+  profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
   college = models.CharField(max_length=120, default='Info Tech', null=True)
   degree = models.CharField(
     max_length=120,
@@ -95,7 +108,7 @@ class Education(models.Model):
 
 # EXPERIENCES MODEL
 class Experience(models.Model):
-  profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
+  profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
   company = models.CharField(max_length=120, default='IFS', null=True)
   profession = models.CharField(
     max_length=120,

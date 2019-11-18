@@ -14,6 +14,11 @@ urlpatterns = [
         name='profiles-list'
     ),
     path(
+        'create/',
+        ProfileListView.as_view(),
+        name='profiles-create'
+    ),
+    path(
         '<int:id>/detail/',
         ProfileDetailView.as_view(),
         name='profiles-detail'

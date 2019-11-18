@@ -27,6 +27,11 @@ class ProfileDetailView(DetailView):
       pk=self.kwargs.get('id')
     )
 
+  def get_context_data(self, *args, **kwargs):
+    context = super(ProfileDetailView, self).get_context_data(*args, **kwargs)
+    context['title'] = self.get_object().name
+    return context
+
 
 # PROFILE UPDATE VIEW
 class ProfileUpdateView(UpdateView):
