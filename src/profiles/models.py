@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import datetime
 
 
 GENDER_CHOICES = [
@@ -23,6 +24,16 @@ PROFESSION_CHOICES = [
   ('ussiness Man', 'Bussiness Man'),
   ('Digital Marketer', 'Digital Marketer'),
   ('Data Scientist', 'Data Scientist'),
+  ('Other', 'Other')
+]
+
+DEGREE_CHOICES = [
+  ('IT', 'Information Technologies'),
+  ('Bussiness Managment', 'Bussiness Managment'),
+  ('Digital Marketing', 'Digital Marketing'),
+  ('Computer Science', 'Computer Science'),
+  ('Civil Engineering', 'Civil Engineering'),
+  ('AI', 'Artificial & Inteligence'),
   ('Other', 'Other')
 ]
 
@@ -69,14 +80,42 @@ class Profile(models.Model):
 
 # EDUCATION MODEL
 class Education(models.Model):
-  pass
+  profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
+  college = models.CharField(max_length=120, default='Info Tech', null=True)
+  degree = models.CharField(
+    max_length=120,
+    default=1,
+    choices=DEGREE_CHOICES
+  )
+  started_at = models.DateField(default=datetime.now, null=True)
+  ended_at = models.DateField(default=datetime.now, null=True)
+  is_currently_studying = models.BooleanField()
+  created_at = models.DateTimeField(auto_now_add=True, null=True)
 
 
 # EXPERIENCES MODEL
 class Experience(models.Model):
-  pass
+  profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
+  company = models.CharField(max_length=120, default='IFS', null=True)
+  profession = models.CharField(
+    max_length=120,
+    default=1,
+    choices=PROFESSION_CHOICES
+  )
+  started_at = models.DateField(default=datetime.now, null=True)
+  ended_at = models.DateField(default=datetime.now, null=True)
+  is_currently_working = models.BooleanField(default=True)
+  created_at = models.DateTimeField(auto_now_add=True, null=True)
 
 
 # SOCIAL MODEL
 class Social(models.Model):
-  pass
+  profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
+  facebook = models.URLField(max_length=283, blank=True, null=True)
+  youtube = models.URLField(max_length=283, blank=True, null=True)
+  twitter = models.URLField(max_length=283, blank=True, null=True)
+  instagram = models.URLField(max_length=283, blank=True, null=True)
+  linkedin = models.URLField(max_length=283, blank=True, null=True)
+  github = models.URLField(max_length=283, blank=True, null=True)
+  google_plus = models.URLField(max_length=283, blank=True, null=True)
+  created_at = models.DateTimeField(auto_now_add=True, null=True)
