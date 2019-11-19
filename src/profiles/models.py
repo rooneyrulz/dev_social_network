@@ -102,6 +102,10 @@ class Profile(models.Model):
   def get_education_url(self, *args, **kwargs):
     return reverse('profiles:educations-list', kwargs={'id':self.pk})
 
+  def get_education_create_url(self, *args, **kwargs):
+    return reverse('profiles:educations-create', kwargs={'id':self.pk})
+  
+  
 
 # EDUCATION MODEL MANAGER
 class EducationManager(models.Manager):
@@ -120,7 +124,7 @@ class Education(models.Model):
   )
   started_at = models.DateField(default=datetime.now, null=True)
   ended_at = models.DateField(default=datetime.now, null=True)
-  is_currently_studying = models.BooleanField()
+  is_currently_studying = models.BooleanField(blank=True, null=True)
   created_at = models.DateTimeField(auto_now_add=True, null=True)
 
   objects = EducationManager()
@@ -133,6 +137,20 @@ class Education(models.Model):
       'profiles:educations-detail',
       kwargs={'profile_id': self.profile.pk, 'education_id': self.pk}
     )
+
+  def get_update_url(self, *args, **kwargs):
+    return reverse(
+      'profiles:educations-update',
+      kwargs={'profile_id': self.profile.pk, 'education_id': self.pk}
+    )
+
+  def get_delete_url(self, *args, **kwargs):
+    return reverse(
+      'profiles:educations-delete',
+      kwargs={'profile_id': self.profile.pk, 'education_id': self.pk}
+    )
+
+  
   
 
 

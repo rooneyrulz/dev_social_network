@@ -12,7 +12,7 @@ from django.views.generic import (
 )
 
 from .models import Profile, Education, Experience, Social
-from .forms import ProfileForm
+from .forms import ProfileForm, EducationForm
 
 
 # PROFILE MIXINS
@@ -126,15 +126,20 @@ class EducationObjectMixin(object):
       self.kwargs.get('profile_id'), self.kwargs.get('education_id')
     )
 
+class EducationCreateObjectMixin(object):
+  def get_object(self, *args, **kwargs):
+    return get_object_or_404(Profile, pk=self.kwargs.get('id')) 
+
 
 # EDUCATION LIST VIEW
-class EducationListView(LoginRequiredMixin, ListView):
+class EducationListView(
+  LoginRequiredMixin,
+  EducationCreateObjectMixin,
+  ListView
+):
   queryset = Education.objects.all()
   context_object_name = 'educations'
   template_name = 'educations/education_list.html'
-
-  # def get_object(self, *args, **kwargs):
-  #   return get_object_or_404(Profile, profile=self.kwargs.get('id'))
 
   def get_queryset(self, *args, **kwargs):
     return Education.objects.filter(profile=self.kwargs.get('id'))
@@ -142,7 +147,7 @@ class EducationListView(LoginRequiredMixin, ListView):
   def get_context_data(self, *args, **kwargs):
     context = super(EducationListView, self).get_context_data(*args, **kwargs)
     context['title'] = 'Educations'
-    # context['profile'] = self.get_object()
+    context['profile'] = self.get_object()
     return context
 
 
@@ -159,4 +164,77 @@ class EducationDetailView(
   def get_context_data(self, *args, **kwargs):
     context = super(EducationDetailView, self).get_context_data(*args, **kwargs)
     context['title'] = 'Education Detail'
+    return context
+
+
+# EDUCATION UPDATE VIEW
+class EducationUpdateView(
+  LoginRequiredMixin,
+  EducationObjectMixin,
+  UpdateView
+):
+  queryset = Education.objects.all()
+  context_object_name = 'edu'
+  template_name = 'educations/education_update.html'
+  form_class = EducationForm
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(EducationUpdateView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Education Update'
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, 'Education has been successfully updated!')
+    return reverse(
+      'profiles:educations-detail',
+      kwargs={
+        'profile_id': self.kwargs.get('profile_id'),
+        'education_id': self.kwargs.get('education_id')
+      }
+    )
+
+
+# EDUCATION DELETE VIEW
+class EducationDeleteView(
+  LoginRequiredMixin,
+  EducationObjectMixin,
+  DeleteView
+):
+  queryset = Education.objects.all()
+  context_object_name = 'edu'
+  template_name = 'educations/education_delete.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(EducationDeleteView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Education Delete'
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, 'Education has been successfully deleted!')
+    return reverse(
+      'profiles:educations-list',
+      kwargs={
+        'id': self.kwargs.get('profile_id'),
+      }
+    )
+
+
+# EDUCATION CREATE VIEW
+class EducationCreateView(
+  LoginRequiredMixin,
+  EducationCreateObjectMixin,
+  CreateView
+):
+  queryset = Education.objects.all()
+  template_name = 'educations/education_create.html'
+  form_class = EducationForm
+
+  def form_valid(self, form):
+    form.instance.profile = self.get_object()
+    messages.success(self.request, 'Education has been created successfully!')
+    return super(EducationCreateView, self).form_valid(form)
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(EducationCreateView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Education Create'
     return context

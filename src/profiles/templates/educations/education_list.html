@@ -5,7 +5,7 @@
   <header class="page-header d-flex">
     <h3 class="page-heading m-0">Educations</h3>
     {% if user.is_authenticated %}
-    <a href="" class="btn btn-info">CREATE EDUCATIONS!</a>
+    <a href="{{profile.get_education_create_url}}" class="btn btn-info">CREATE EDUCATIONS!</a>
     {% endif %}
   </header>
   <hr>

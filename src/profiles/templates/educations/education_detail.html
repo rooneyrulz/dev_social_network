@@ -6,11 +6,32 @@
     <h3 class="page-heading">Education Detail</h3>
     {% if user.is_authenticated and edu.profile == user.profile %}
     <div class="btn-group">
-      <a href="" class="btn btn-outline-success">EDIT EDUCATION</a>
-      <a href="" class="btn btn-danger">DELETE EDUCATION</a>
+      <a href="{{edu.get_update_url}}" class="btn btn-outline-success">EDIT EDUCATION</a>
+      <a href="{{edu.get_delete_url}}" class="btn btn-danger">DELETE EDUCATION</a>
     </div>
     {% endif %}
   </header>
   <hr>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>College</strong>
+      <span class="float-right">{{edu.college}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Degree</strong>
+      <span class="float-right">{{edu.degree}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Started At</strong>
+      <span class="float-right">{{edu.started_at}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Ended At</strong>
+      <span class="float-right">{{edu.ended_at}}</span>
+    </li>
+    <li class="list-group-item">
+      <p class="text-center lead text-muted">{{edu.created_at}}</p>
+    </li>
+  </ul>
 </div>
 {% endblock content %}

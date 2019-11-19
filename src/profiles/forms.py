@@ -142,11 +142,9 @@ class ProfileForm(forms.ModelForm):
     )
   )
 
-
   class Meta:
     model = Profile
     fields = ('name', 'age', 'gender', 'status', 'website', 'company', 'profession', 'location', 'skills', 'bio', 'image',)
-  
 
   def clean_age(self, *args, **kwargs):
     age = self.cleaned_data.get('age')
@@ -156,3 +154,57 @@ class ProfileForm(forms.ModelForm):
       raise forms.ValidationError('Age must be at least 18 years!')
     else:
       return age
+
+
+class EducationForm(forms.ModelForm):
+  college = forms.CharField(
+    widget=forms.TextInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Enter College'
+      }
+    )
+  )
+
+  degree = forms.ChoiceField(
+    choices=DEGREE_CHOICES,
+    widget=forms.Select(
+      attrs={
+        'class': 'form-control form-control-lg',
+      }
+    )
+  )
+
+  started_at = forms.DateField(
+    widget=forms.DateInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+      }
+    )
+  )
+
+  ended_at = forms.DateField(
+    widget=forms.DateInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+      }
+    )
+  )
+
+  is_currently_studying = forms.BooleanField(
+    label='currently studying',
+    widget=forms.CheckboxInput(
+      attrs={
+        'class': '',
+      }
+    )
+  )
+  class Meta:
+    model = Education
+    fields = ('college', 'degree', 'started_at', 'ended_at', 'is_currently_studying',)
+
+
+class ExperienceForm(forms.ModelForm):
+  class Meta:
+    model = Experience
+    fields = ('company', 'profession', 'started_at', 'ended_at', 'is_currently_working',)
