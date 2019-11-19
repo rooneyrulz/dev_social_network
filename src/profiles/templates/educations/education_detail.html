@@ -4,6 +4,12 @@
 <div class="education-list">
   <header class="page-header d-flex">
     <h3 class="page-heading">Education Detail</h3>
+    {% if user.is_authenticated and edu.profile == user.profile %}
+    <div class="btn-group">
+      <a href="" class="btn btn-outline-success">EDIT EDUCATION</a>
+      <a href="" class="btn btn-danger">DELETE EDUCATION</a>
+    </div>
+    {% endif %}
   </header>
   <hr>
 </div>

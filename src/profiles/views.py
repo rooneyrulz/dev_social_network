@@ -119,8 +119,16 @@ class ProfileDeleteView(
 #######################EDUCATION VIEWS##################################
 
 
+# EDUCATION MIXINS
+class EducationObjectMixin(object):
+  def get_object(self, *args, **kwargs):
+    return Education.objects.get_profile_education(
+      self.kwargs.get('profile_id'), self.kwargs.get('education_id')
+    )
+
+
 # EDUCATION LIST VIEW
-class EducationListView(ListView):
+class EducationListView(LoginRequiredMixin, ListView):
   queryset = Education.objects.all()
   context_object_name = 'educations'
   template_name = 'educations/education_list.html'
@@ -139,16 +147,16 @@ class EducationListView(ListView):
 
 
 # EDUCATION DETAIL VIEW
-class EducationDetailView(DetailView):
+class EducationDetailView(
+  LoginRequiredMixin,
+  EducationObjectMixin,
+  DetailView
+):
   queryset = Education.objects.all()
   context_object_name = 'edu'
   template_name = 'educations/education_detail.html'
 
-  def get_object(self, *args, **kwargs):
-    return get_object_or_404(
-      Education,
-      profile=self.kwargs.get('profile_id'),
-      pk=self.kwargs.get('education_id')
-    )
-
-
+  def get_context_data(self, *args, **kwargs):
+    context = super(EducationDetailView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Education Detail'
+    return context

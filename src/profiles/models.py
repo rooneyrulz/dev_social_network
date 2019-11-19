@@ -39,12 +39,13 @@ DEGREE_CHOICES = [
   ('Other', 'Other')
 ]
 
-
+# PROFILE MODEL MANAGER
 class ProfileManager(models.Manager):
   def get_auth_profile(self, profile, user, *args, **kwargs):
     return get_object_or_404(self, pk=profile, user=user)
 
 
+# PROFILE MODEL
 class Profile(models.Model):
   user = models.OneToOneField(
     settings.AUTH_USER_MODEL,
@@ -102,6 +103,12 @@ class Profile(models.Model):
     return reverse('profiles:educations-list', kwargs={'id':self.pk})
 
 
+# EDUCATION MODEL MANAGER
+class EducationManager(models.Manager):
+  def get_profile_education(self, profile, education):
+    return get_object_or_404(Education, profile=profile, pk=education)
+
+
 # EDUCATION MODEL
 class Education(models.Model):
   profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
@@ -115,6 +122,8 @@ class Education(models.Model):
   ended_at = models.DateField(default=datetime.now, null=True)
   is_currently_studying = models.BooleanField()
   created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+  objects = EducationManager()
 
   def __str__(self):
     return self.profile.name
