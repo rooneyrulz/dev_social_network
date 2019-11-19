@@ -4,7 +4,9 @@ from .views import (
     ProfileCreateView,
     ProfileDetailView,
     ProfileUpdateView,
-    ProfileDeleteView
+    ProfileDeleteView,
+    EducationListView,
+    EducationDetailView
 )
 
 app_name = 'profiles'
@@ -33,6 +35,16 @@ urlpatterns = [
         '<int:id>/update/',
         ProfileUpdateView.as_view(),
         name='profiles-update'
+    ),
+    path(
+        '<int:id>/educations/',
+        EducationListView.as_view(),
+        name='educations-list'
+    ),
+    path(
+        '<int:profile_id>/educations/<int:education_id>/detail',
+        EducationDetailView.as_view(),
+        name='educations-detail'
     ),
 ]
 

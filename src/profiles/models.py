@@ -41,9 +41,6 @@ DEGREE_CHOICES = [
 
 
 class ProfileManager(models.Manager):
-  def check_user_profile(self, user, *args, **kwargs):
-    return get_object_or_404(self, user=user)
-  
   def get_auth_profile(self, profile, user, *args, **kwargs):
     return get_object_or_404(self, pk=profile, user=user)
 
@@ -101,6 +98,9 @@ class Profile(models.Model):
   def get_delete_url(self, *args, **kwargs):
     return reverse('profiles:profiles-delete', kwargs={'id':self.pk})
 
+  def get_education_url(self, *args, **kwargs):
+    return reverse('profiles:educations-list', kwargs={'id':self.pk})
+
 
 # EDUCATION MODEL
 class Education(models.Model):
@@ -115,6 +115,16 @@ class Education(models.Model):
   ended_at = models.DateField(default=datetime.now, null=True)
   is_currently_studying = models.BooleanField()
   created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+  def __str__(self):
+    return self.profile.name
+
+  def get_absolute_url(self, *args, **kwargs):
+    return reverse(
+      'profiles:educations-detail',
+      kwargs={'profile_id': self.profile.pk, 'education_id': self.pk}
+    )
+  
 
 
 # EXPERIENCES MODEL

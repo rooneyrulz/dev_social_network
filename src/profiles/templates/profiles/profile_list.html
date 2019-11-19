@@ -6,7 +6,7 @@
     <h3 class="page-heading">Developers</h3>
     {% if user.is_authenticated and not user.profile %}
     <a href="/dev/profiles/create/" class="btn btn-primary">
-      Create Profile!
+      CREATE PROFILE!
     </a>
     {% endif %}
   </header>
@@ -25,7 +25,7 @@
         <p class="m-0 text-muted">{{profile.profession}}</p>
       </div>
       <div class="card-right">
-        <a href="{{profile.get_absolute_url}}" class="btn btn-outline-primary">Check</a>
+        <a href="{{profile.get_absolute_url}}" class="btn btn-outline-primary">CHECK</a>
       </div>
     </div>
   </div>

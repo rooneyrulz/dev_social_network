@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="education-list">
+  <header class="page-header d-flex">
+    <h3 class="page-heading m-0">Educations</h3>
+    {% if user.is_authenticated %}
+    <a href="" class="btn btn-info">CREATE EDUCATIONS!</a>
+    {% endif %}
+  </header>
+  <hr>
+  {% if not educations.exists %}
+  <p class="lead text-muted">No educations found!</p>
+  {% else %}
+  {% for edu in educations %}
+  <div class="card card-educations my-2">
+    <div class="card-header">
+      <h4>Education-{{forloop.counter}}</h4>
+    </div>
+    <div class="card-body d-flex">
+      <a href="{{edu.get_absolute_url}}" class="btn btn-outline-primary">CHECK</a>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+{% endblock content %}
