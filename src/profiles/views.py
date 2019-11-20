@@ -120,21 +120,21 @@ class ProfileDeleteView(
 
 
 # EDUCATION MIXINS
-class EducationObjectMixin(object):
+class EducationProfileObjectMixin(object):
   def get_object(self, *args, **kwargs):
     return Education.objects.get_profile_education(
       self.kwargs.get('profile_id'), self.kwargs.get('education_id')
     )
 
-class EducationCreateObjectMixin(object):
+class EducationObjectMixin(object):
   def get_object(self, *args, **kwargs):
-    return get_object_or_404(Profile, pk=self.kwargs.get('id')) 
+    return get_object_or_404(Profile, pk=self.kwargs.get('id'), user=self.request.user) 
 
 
 # EDUCATION LIST VIEW
 class EducationListView(
   LoginRequiredMixin,
-  EducationCreateObjectMixin,
+  EducationObjectMixin,
   ListView
 ):
   queryset = Education.objects.all()
@@ -154,7 +154,7 @@ class EducationListView(
 # EDUCATION DETAIL VIEW
 class EducationDetailView(
   LoginRequiredMixin,
-  EducationObjectMixin,
+  EducationProfileObjectMixin,
   DetailView
 ):
   queryset = Education.objects.all()
@@ -170,7 +170,7 @@ class EducationDetailView(
 # EDUCATION UPDATE VIEW
 class EducationUpdateView(
   LoginRequiredMixin,
-  EducationObjectMixin,
+  EducationProfileObjectMixin,
   UpdateView
 ):
   queryset = Education.objects.all()
@@ -197,7 +197,7 @@ class EducationUpdateView(
 # EDUCATION DELETE VIEW
 class EducationDeleteView(
   LoginRequiredMixin,
-  EducationObjectMixin,
+  EducationProfileObjectMixin,
   DeleteView
 ):
   queryset = Education.objects.all()
@@ -219,6 +219,12 @@ class EducationDeleteView(
     )
 
 
+# EDUCATION CREATE MIXIN
+class EducationCreateObjectMixin(object):
+  def check_profile(self, *args, **kwargs):
+    return get_object_or_404(Profile, pk=self.request.user.profile.pk, user=self.request.user.pk)
+    # return redirect('/dsd/sdd/dsd')
+
 # EDUCATION CREATE VIEW
 class EducationCreateView(
   LoginRequiredMixin,
@@ -230,11 +236,13 @@ class EducationCreateView(
   form_class = EducationForm
 
   def form_valid(self, form):
-    form.instance.profile = self.get_object()
-    messages.success(self.request, 'Education has been created successfully!')
-    return super(EducationCreateView, self).form_valid(form)
+    if self.check_profile():
+      form.instance.profile = self.get_object()
+      messages.success(self.request, 'Education has been created successfully!')
+      return super(EducationCreateView, self).form_valid(form)
 
   def get_context_data(self, *args, **kwargs):
-    context = super(EducationCreateView, self).get_context_data(*args, **kwargs)
-    context['title'] = 'Education Create'
-    return context
+    if self.check_profile():
+      context = super(EducationCreateView, self).get_context_data(*args, **kwargs)
+      context['title'] = 'Education Create'
+      return context

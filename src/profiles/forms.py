@@ -192,10 +192,11 @@ class EducationForm(forms.ModelForm):
   )
 
   is_currently_studying = forms.BooleanField(
+      required=False,
     label='currently studying',
     widget=forms.CheckboxInput(
       attrs={
-        'class': '',
+        'class': 'form-check',
       }
     )
   )

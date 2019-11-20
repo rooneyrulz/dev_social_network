@@ -4,13 +4,13 @@
 {% block content %}
 <div class="profiles-create" style="width: 60%; margin:auto">
   <header class="page-header d-flex">
-    <h3 class="page-heading">Profile Create</h3>
+    <h3 class="page-heading">Create Profile</h3>
   </header>
   <hr>
   <div class="profile-create-form">
     <form action="" method="POST"> {% csrf_token %}
       {{ form|crispy }}
-      <button type="submit" class="btn btn-success btn-lg">Create</button>
+      <button type="submit" class="btn btn-success btn-lg">CREATE PROFILE</button>
     </form>
   </div>
 </div>

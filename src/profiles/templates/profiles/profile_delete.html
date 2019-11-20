@@ -3,16 +3,19 @@
 {% block content %}
 <div class="profiles-delete">
   <header class="page-header d-flex">
-    <h3 class="page-heading">Profile Delete</h3>
+    <h3 class="page-heading text-muted">Privacy Zone</h3>
   </header>
   <hr>
   <div class="card border-danger">
+    <div class="card-header">
+      <h4><a style="text-decoration: none;" href="{{profile.get_absolute_url}}">{{profile.name}}</a></h4>
+    </div>
     <div class="card-body">
       <p class="lead">Do you wanna delete the profile?</p>
       <form action="" method="POST">
         <div class="btn-group">
-          <button type="submit" class="btn btn-danger">Yes</button>
-          <a href="{{profile.get_absolute_url}}" class="btn btn-dark">No</a>
+          <button type="submit" class="btn btn-danger">YES</button>
+          <a href="{{profile.get_absolute_url}}" class="btn btn-dark">NO</a>
         </div>
       </form>
     </div>

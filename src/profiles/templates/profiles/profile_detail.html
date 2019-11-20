@@ -6,8 +6,8 @@
     <h3 class="page-heading m-0">{{title}}</h3>
     {% if user.is_authenticated and profile.user == user %}
     <div class="btn-group">
-      <a href="{{profile.get_update_url}}" class="btn btn-outline-success">Edit Profile</a>
-      <a href="{{profile.get_delete_url}}" class="btn btn-danger">Delete Profile</a>
+      <a href="{{profile.get_update_url}}" class="btn btn-outline-success">EDIT PROFILE</a>
+      <a href="{{profile.get_delete_url}}" class="btn btn-danger">DELETE PROFILE</a>
     </div>
     {% endif %}
   </header>
@@ -20,8 +20,8 @@
       <p class="mb-2 text-muted">{{profile.profession}}</p>
       <p class="text-muted">{{profile.location}}</p>
       <div class="btn-group">
-        <a href="" class="btn btn-outline-primary">Experiences</a>
-        <a href="{{profile.get_education_url}}" class="btn btn-dark">Educations</a>
+        <a href="" class="btn btn-outline-primary">EXPERIENCES</a>
+        <a href="{{profile.get_education_url}}" class="btn btn-dark">EDUCATIONS</a>
       </div>
     </div>
     <div class=""></div>

@@ -3,7 +3,7 @@
 {% block content %}
 <div class="education-list">
   <header class="page-header d-flex">
-    <h3 class="page-heading">Education Detail</h3>
+    <h3 class="page-heading">Education {{edu.pk}}</h3>
     {% if user.is_authenticated and edu.profile == user.profile %}
     <div class="btn-group">
       <a href="{{edu.get_update_url}}" class="btn btn-outline-success">EDIT EDUCATION</a>

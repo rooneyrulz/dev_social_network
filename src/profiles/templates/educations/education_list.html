@@ -4,7 +4,7 @@
 <div class="education-list">
   <header class="page-header d-flex">
     <h3 class="page-heading m-0">Educations</h3>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and profile.user == user %}
     <a href="{{profile.get_education_create_url}}" class="btn btn-info">CREATE EDUCATIONS!</a>
     {% endif %}
   </header>
@@ -15,10 +15,10 @@
   {% for edu in educations %}
   <div class="card card-educations my-2">
     <div class="card-header">
-      <h4>Education-{{forloop.counter}}</h4>
+      <h4>Education-{{edu.pk}}</h4>
     </div>
     <div class="card-body d-flex">
-      <a href="{{edu.get_absolute_url}}" class="btn btn-outline-primary">CHECK</a>
+      <a href="{{edu.get_absolute_url}}" class="btn btn-primary">CHECK</a>
     </div>
   </div>
   {% endfor %}
