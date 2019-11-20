@@ -12,7 +12,7 @@
     </div>
     <div class="card-body">
       <p class="lead">Do you wanna delete the profile?</p>
-      <form action="" method="POST">
+      <form action="" method="POST">{% csrf_token %}
         <div class="btn-group">
           <button type="submit" class="btn btn-danger">YES</button>
           <a href="{{profile.get_absolute_url}}" class="btn btn-dark">NO</a>

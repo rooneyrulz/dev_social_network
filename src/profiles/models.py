@@ -1,5 +1,6 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.conf import settings
 from django.urls import reverse
 from datetime import datetime
@@ -44,6 +45,14 @@ class ProfileManager(models.Manager):
   def get_auth_profile(self, profile, user, *args, **kwargs):
     return get_object_or_404(self, pk=profile, user=user)
 
+  def check_auth_profile(self, user, *args, **kwargs):
+    try:
+      obj = self.get(user=user)
+      if obj:
+        return obj
+    except Profile.DoesNotExist:
+      return None
+    
 
 # PROFILE MODEL
 class Profile(models.Model):
