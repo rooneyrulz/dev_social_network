@@ -33,7 +33,7 @@ class CheckAuthProfileMixin(object):
   def get_object(self, *args, **kwargs):
     obj = self.model.objects.check_auth_profile(self.request.user)
     if not obj is None:
-      return reverse('profiles:profiles-detail', kwargs={'id': obj.pk})
+      return obj
     else:
       return None
 
@@ -62,9 +62,14 @@ class ProfileCreateView(LoginRequiredMixin, CheckAuthProfileMixin, CreateView):
     return super(ProfileCreateView, self).form_valid(form)
 
   def get_context_data(self, *args, **kwargs):
+    context = super(ProfileCreateView, self).get_context_data(*args, **kwargs)
+    
     if self.get_object() is None:
-      context = super(ProfileCreateView, self).get_context_data(*args, **kwargs)
       context['title'] = 'Create Profile'
+      return context
+    else:
+      context['title'] = 'Create Profile'
+      context['profile'] = self.get_object()
       return context
 
 

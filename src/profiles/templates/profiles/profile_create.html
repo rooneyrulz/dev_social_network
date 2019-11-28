@@ -7,11 +7,16 @@
     <h3 class="page-heading">Create Profile</h3>
   </header>
   <hr>
+  {% if profile %}
+  <p class="lead">You already have a profile</p>
+  <a href="{% url 'profiles:profiles-detail' id=profile.pk %}" class="btn btn-lg btn-primary">Check My Profile</a>
+  {% else %}
   <div class="profile-create-form">
     <form action="" method="POST"> {% csrf_token %}
       {{ form|crispy }}
       <button type="submit" class="btn btn-success btn-lg">CREATE PROFILE</button>
     </form>
   </div>
+  {% endif %}
 </div>
 {% endblock content %}
