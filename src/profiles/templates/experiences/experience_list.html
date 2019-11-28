@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="experience-list">
+  <header class="page-header d-flex">
+    <h3 class="page-heading m-0">Experiences</h3>
+    {% if user.is_authenticated and profile.user == user %}
+    <a href="{{profile.get_experience_create_url}}" class="btn btn-info">CREATE EXPERIENCE!</a>
+    {% endif %}
+  </header>
+  <hr>
+  {% if not experiences.exists %}
+  <p class="lead text-muted">No experiences found!</p>
+  {% else %}
+  {% for exp in experiences %}
+  <div class="card card-educations my-2">
+    <div class="card-header">
+      <h4>Experience-{{exp.pk}}</h4>
+    </div>
+    <div class="card-body d-flex">
+      <a href="{{exp.get_absolute_url}}" class="btn btn-primary">CHECK</a>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+{% endblock content %}

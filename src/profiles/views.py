@@ -13,7 +13,7 @@ from django.views.generic import (
 )
 
 from .models import Profile, Education, Experience, Social
-from .forms import ProfileForm, EducationForm
+from .forms import ProfileForm, EducationForm, ExperienceForm
 
 
 # PROFILE MIXINS
@@ -150,7 +150,7 @@ class EducationProfileObjectMixin(object):
       self.kwargs.get(self.education_lookup)
     )
 
-class EducationObjectMixin(object):
+class ExpOrEduObjectMixin(object):
   model = Profile
   lookup = 'id'
 
@@ -164,7 +164,7 @@ class EducationObjectMixin(object):
 # EDUCATION LIST VIEW
 class EducationListView(
   LoginRequiredMixin,
-  EducationObjectMixin,
+  ExpOrEduObjectMixin,
   ListView
 ):
   queryset = Education.objects.all()
@@ -252,7 +252,7 @@ class EducationDeleteView(
 # EDUCATION CREATE VIEW
 class EducationCreateView(
   LoginRequiredMixin,
-  EducationObjectMixin,
+  ExpOrEduObjectMixin,
   CreateView
 ):
   queryset = Education.objects.all()
@@ -270,3 +270,123 @@ class EducationCreateView(
       context = super(EducationCreateView, self).get_context_data(*args, **kwargs)
       context['title'] = 'Education Create'
       return context
+
+
+#######################EXPERIENCE VIEWS##################################
+
+
+# EXPERIENCE MIXINS
+class ExperienceProfileObjectMixin(object):
+  model = Experience
+  profile_lookup = 'profile_id'
+  experience_lookup = 'experience_id'
+
+  def get_object(self, *args, **kwargs):
+    return self.model.objects.get_profile_experience(
+      self.kwargs.get(self.profile_lookup),
+      self.kwargs.get(self.experience_lookup)
+    )
+
+
+# EXPERIENCE LIST VIEW
+class ExperienceListView(LoginRequiredMixin, ExpOrEduObjectMixin, ListView):
+  queryset = Experience.objects.all()
+  context_object_name = 'experiences'
+  template_name = 'experiences/experience_list.html'
+
+  def get_queryset(self, *args, **kwargs):
+    return Experience.objects.filter(profile=self.get_object().pk)
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(ExperienceListView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Experiences'
+    context['profile'] = self.get_object()
+    return context
+
+
+# EXPERIENCE CREATE VIEW
+class ExperienceCreateView(LoginRequiredMixin, ExpOrEduObjectMixin, CreateView):
+  queryset = Experience.objects.all()
+  template_name = 'experiences/experience_create.html'
+  form_class = ExperienceForm
+
+  def form_valid(self, form, *args, **kwargs):
+    if self.get_object():
+      form.instance.profile = self.get_object()
+      messages.success(self.request, 'Experience has been created successfully!')
+      return super(ExperienceCreateView, self).form_valid(form)
+
+  def get_context_data(self, *args, **kwargs):
+    if self.get_object():
+      context = super(ExperienceCreateView, self).get_context_data(*args, **kwargs)
+      context['title'] = 'Experiences Create'
+      return context
+
+
+# EXPERIENCE DETAIL VIEW
+class ExperienceDetailView(
+  LoginRequiredMixin,
+  ExperienceProfileObjectMixin,
+  DetailView
+):
+  queryset = Experience.objects.all()
+  context_object_name = 'exp'
+  template_name = 'experiences/experience_detail.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(ExperienceDetailView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Experience Detail'
+    return context
+
+
+# EXPERIENCE UPDATE VIEW
+class ExperienceUpdateView(
+  LoginRequiredMixin,
+  ExperienceProfileObjectMixin,
+  UpdateView
+):
+  queryset = Experience.objects.all()
+  context_object_name = 'exp'
+  template_name = 'experiences/experience_update.html'
+  form_class = ExperienceForm
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(ExperienceUpdateView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Experience Update'
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, 'Experience has been successfully updated!')
+    return reverse(
+      'profiles:experiences-detail',
+      kwargs={
+        'profile_id': self.kwargs.get('profile_id'),
+        'experience_id': self.kwargs.get('experience_id')
+      }
+    )
+
+
+# Experience DELETE VIEW
+class ExperienceDeleteView(
+  LoginRequiredMixin,
+  ExperienceProfileObjectMixin,
+  DeleteView
+):
+  queryset = Experience.objects.all()
+  context_object_name = 'exp'
+  template_name = 'experiences/experience_delete.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(ExperienceDeleteView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Experience Delete'
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, 'Experience has been successfully deleted!')
+    return reverse(
+      'profiles:experiences-list',
+      kwargs={
+        'id': self.kwargs.get('profile_id'),
+      }
+    )
+

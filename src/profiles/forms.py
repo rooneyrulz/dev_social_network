@@ -184,6 +184,7 @@ class EducationForm(forms.ModelForm):
   )
 
   ended_at = forms.DateField(
+    required=False,
     widget=forms.DateInput(
       attrs={
         'class': 'form-control form-control-lg',
@@ -192,7 +193,7 @@ class EducationForm(forms.ModelForm):
   )
 
   is_currently_studying = forms.BooleanField(
-      required=False,
+    required=False,
     label='currently studying',
     widget=forms.CheckboxInput(
       attrs={
@@ -206,6 +207,50 @@ class EducationForm(forms.ModelForm):
 
 
 class ExperienceForm(forms.ModelForm):
+  company = forms.CharField(
+    widget=forms.TextInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Enter Company'
+      }
+    )
+  )
+
+  profession = forms.ChoiceField(
+    choices=PROFESSION_CHOICES,
+    widget=forms.Select(
+      attrs={
+        'class': 'form-control form-control-lg',
+      }
+    )
+  )
+
+  started_at = forms.DateField(
+    widget=forms.DateInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+      }
+    )
+  )
+
+  ended_at = forms.DateField(
+    required=False,
+    widget=forms.DateInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+      }
+    )
+  )
+
+  is_currently_working = forms.BooleanField(
+    required=False,
+    label='currently working',
+    widget=forms.CheckboxInput(
+      attrs={
+        'class': 'form-check',
+      }
+    )
+  )
   class Meta:
     model = Experience
     fields = ('company', 'profession', 'started_at', 'ended_at', 'is_currently_working',)

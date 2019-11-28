@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="experience-list">
+  <header class="page-header d-flex">
+    <h3 class="page-heading">Experience {{exp.pk}}</h3>
+    {% if user.is_authenticated and exp.profile == user.profile %}
+    <div class="btn-group">
+      <a href="{{exp.get_update_url}}" class="btn btn-outline-success">EDIT EXPERIENCE</a>
+      <a href="{{exp.get_delete_url}}" class="btn btn-danger">DELETE EXPERIENCE</a>
+    </div>
+    {% endif %}
+  </header>
+  <hr>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>Company</strong>
+      <span class="float-right">{{exp.company}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Profession</strong>
+      <span class="float-right">{{exp.profession}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Started At</strong>
+      <span class="float-right">{{exp.started_at}}</span>
+    </li>
+    {% if exp.is_currently_working %}
+    <li class="list-group-item">
+      <strong>Current Status</strong>
+      <span class="float-right">Still Working</span>
+    </li>
+    {% else %}
+    <li class="list-group-item">
+      <strong>Ended At</strong>
+      <span class="float-right">{{exp.ended_at}}</span>
+    </li>
+    {% endif %}
+    <li class="list-group-item">
+      <p class="text-center lead text-muted">{{exp.created_at}}</p>
+    </li>
+  </ul>
+</div>
+{% endblock content %}

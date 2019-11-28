@@ -25,10 +25,17 @@
       <strong>Started At</strong>
       <span class="float-right">{{edu.started_at}}</span>
     </li>
+    {% if edu.is_currently_studying %}
+    <li class="list-group-item">
+      <strong>Current Status</strong>
+      <span class="float-right">Still Studying</span>
+    </li>
+    {% else %}
     <li class="list-group-item">
       <strong>Ended At</strong>
       <span class="float-right">{{edu.ended_at}}</span>
     </li>
+    {% endif %}
     <li class="list-group-item">
       <p class="text-center lead text-muted">{{edu.created_at}}</p>
     </li>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="experience-create" style="width: 60%; margin:auto">
+  <header class="page-header d-flex">
+    <h3 class="page-heading">Create Experience</h3>
+  </header>
+  <hr>
+  <div class="experience-create-form">
+    <form action="" method="POST"> {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success btn-lg">CREATE EXPERIENCE</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

@@ -9,7 +9,12 @@ from .views import (
     EducationCreateView,
     EducationDetailView,
     EducationUpdateView,
-    EducationDeleteView
+    EducationDeleteView,
+    ExperienceListView,
+    ExperienceCreateView,
+    ExperienceDetailView,
+    ExperienceUpdateView,
+    ExperienceDeleteView
 )
 
 app_name = 'profiles'
@@ -45,9 +50,19 @@ urlpatterns = [
         name='educations-list'
     ),
     path(
+        '<int:id>/experiences/',
+        ExperienceListView.as_view(),
+        name='experiences-list'
+    ),
+    path(
         '<int:id>/educations/create',
         EducationCreateView.as_view(),
         name='educations-create'
+    ),
+    path(
+        '<int:id>/experiences/create',
+        ExperienceCreateView.as_view(),
+        name='experiences-create'
     ),
     path(
         '<int:profile_id>/educations/<int:education_id>/detail',
@@ -55,14 +70,29 @@ urlpatterns = [
         name='educations-detail'
     ),
     path(
+        '<int:profile_id>/experiences/<int:experience_id>/detail',
+        ExperienceDetailView.as_view(),
+        name='experiences-detail'
+    ),
+    path(
         '<int:profile_id>/educations/<int:education_id>/update',
         EducationUpdateView.as_view(),
         name='educations-update'
     ),
     path(
+        '<int:profile_id>/experiences/<int:experience_id>/update',
+        ExperienceUpdateView.as_view(),
+        name='experiences-update'
+    ),
+    path(
         '<int:profile_id>/educations/<int:education_id>/delete',
         EducationDeleteView.as_view(),
         name='educations-delete'
+    ),
+    path(
+        '<int:profile_id>/experiences/<int:experience_id>/delete',
+        ExperienceDeleteView.as_view(),
+        name='experiences-delete'
     ),
 ]
 
