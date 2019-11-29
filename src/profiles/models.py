@@ -120,6 +120,11 @@ class Profile(models.Model):
   def get_experience_create_url(self, *args, **kwargs):
     return reverse('profiles:experiences-create', kwargs={'id':self.pk})
   
+  def get_social_url(self, *args, **kwargs):
+    return reverse('profiles:socials', kwargs={'id':self.pk})
+
+  def get_social_create_url(self, *args, **kwargs):
+    return reverse('profiles:socials-create', kwargs={'id':self.pk})
   
 
 # EDUCATION MODEL MANAGER
@@ -210,6 +215,12 @@ class Experience(models.Model):
     )
 
 
+# SOCIAL MODEL MANAGER
+class SocialManager(models.Manager):
+  def get_social_object(self, profile, user):
+    return get_object_or_404(self.model, profile=profile, pk=user.profile.social.pk)
+
+
 # SOCIAL MODEL
 class Social(models.Model):
   profile = models.OneToOneField(Profile, on_delete=models.CASCADE, null=True)
@@ -221,3 +232,11 @@ class Social(models.Model):
   github = models.URLField(max_length=283, blank=True, null=True)
   google_plus = models.URLField(max_length=283, blank=True, null=True)
   created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+  objects = SocialManager()
+
+  def __str__(self, *args, **kwargs):
+    return self.profile.name
+
+  def get_absolute_url(self, *args, **kwargs):
+    return reverse('profiles:socials-detail', kwargs={'id': self.profile.pk})

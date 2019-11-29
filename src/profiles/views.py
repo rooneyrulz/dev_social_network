@@ -13,7 +13,7 @@ from django.views.generic import (
 )
 
 from .models import Profile, Education, Experience, Social
-from .forms import ProfileForm, EducationForm, ExperienceForm
+from .forms import ProfileForm, EducationForm, ExperienceForm, SocialForm
 
 
 # PROFILE MIXINS
@@ -150,21 +150,11 @@ class EducationProfileObjectMixin(object):
       self.kwargs.get(self.education_lookup)
     )
 
-class ExpOrEduObjectMixin(object):
-  model = Profile
-  lookup = 'id'
-
-  def get_object(self, *args, **kwargs):
-    return self.model.objects.get_auth_profile(
-      self.kwargs.get(self.lookup),
-      self.request.user
-    )
-
 
 # EDUCATION LIST VIEW
 class EducationListView(
   LoginRequiredMixin,
-  ExpOrEduObjectMixin,
+  ProfileObjectMixin,
   ListView
 ):
   queryset = Education.objects.all()
@@ -252,7 +242,7 @@ class EducationDeleteView(
 # EDUCATION CREATE VIEW
 class EducationCreateView(
   LoginRequiredMixin,
-  ExpOrEduObjectMixin,
+  ProfileObjectMixin,
   CreateView
 ):
   queryset = Education.objects.all()
@@ -289,7 +279,7 @@ class ExperienceProfileObjectMixin(object):
 
 
 # EXPERIENCE LIST VIEW
-class ExperienceListView(LoginRequiredMixin, ExpOrEduObjectMixin, ListView):
+class ExperienceListView(LoginRequiredMixin, ProfileObjectMixin, ListView):
   queryset = Experience.objects.all()
   context_object_name = 'experiences'
   template_name = 'experiences/experience_list.html'
@@ -305,7 +295,7 @@ class ExperienceListView(LoginRequiredMixin, ExpOrEduObjectMixin, ListView):
 
 
 # EXPERIENCE CREATE VIEW
-class ExperienceCreateView(LoginRequiredMixin, ExpOrEduObjectMixin, CreateView):
+class ExperienceCreateView(LoginRequiredMixin, ProfileObjectMixin, CreateView):
   queryset = Experience.objects.all()
   template_name = 'experiences/experience_create.html'
   form_class = ExperienceForm
@@ -389,4 +379,44 @@ class ExperienceDeleteView(
         'id': self.kwargs.get('profile_id'),
       }
     )
+
+
+#######################SOCIAL VIEWS##################################
+
+
+# SOCIAL MIXINS
+class SocialObjectMixin(object):
+  model = Social
+
+  def get_object(self, *args, **kwargs):
+    return Social.objects.get_social_object(self.kwargs.get('id'), self.request.user)
+
+
+# SOCIAL CREATE VIEW
+class SocialCreateView(LoginRequiredMixin, ProfileObjectMixin, CreateView):
+  queryset = Social.objects.all()
+  template_name = 'socials/social_create.html'
+  form_class = SocialForm
+
+  def form_valid(self, form, *args, **kwargs):
+    form.instance.profile = self.get_object()
+    messages.success(self.request, 'Social page has been created successfully!')
+    return super(SocialCreateView, self).form_valid(form)
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(SocialCreateView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Socials'
+    return context
+
+
+# SOCIAL DETAIL VIEW
+class SocialDetailView(LoginRequiredMixin, SocialObjectMixin, DetailView):
+  queryset = Social.objects.all()
+  context_object_name = 'social'
+  template_name = 'socials/social_detail.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(SocialDetailView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Social Detail'
+    return context
 

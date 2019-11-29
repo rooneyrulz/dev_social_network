@@ -74,9 +74,9 @@ class ProfileForm(forms.ModelForm):
     )
   )
 
-  website = forms.CharField(
+  website = forms.URLField(
     required=False,
-    widget=forms.TextInput(
+    widget=forms.URLInput(
       attrs={
         'class': 'form-control form-control-lg',
         'placeholder': 'Enter Website'
@@ -254,3 +254,69 @@ class ExperienceForm(forms.ModelForm):
   class Meta:
     model = Experience
     fields = ('company', 'profession', 'started_at', 'ended_at', 'is_currently_working',)
+
+
+class SocialForm(forms.ModelForm):
+  facebook = forms.URLField(
+    required=False,
+    widget=forms.URLInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Facebook URL'
+      }
+    )
+  )
+
+  youtube = forms.URLField(
+    required=False,
+    widget=forms.URLInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Youtube URL'
+      }
+    )
+  )
+
+  twitter = forms.URLField(
+    required=False,
+    widget=forms.URLInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Twitter URL'
+      }
+    )
+  )
+
+  linkedin = forms.URLField(
+    required=False,
+    widget=forms.URLInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Linkedin URL'
+      }
+    )
+  )
+
+  instagram = forms.URLField(
+    required=False,
+    widget=forms.URLInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Instagram URL'
+      }
+    )
+  )
+
+  github = forms.URLField(
+    required=False,
+    widget=forms.URLInput(
+      attrs={
+        'class': 'form-control form-control-lg',
+        'placeholder': 'Github URL'
+      }
+    )
+  )
+
+  class Meta:
+    model = Social
+    fields = ['facebook', 'youtube', 'twitter', 'linkedin', 'instagram', 'github']

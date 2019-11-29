@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="social-list">
+  <header class="page-header d-flex">
+    <h3 class="page-heading">Social Page</h3>
+    {% if user.is_authenticated and social.profile == user.profile %}
+    <div class="btn-group">
+      <a href="" class="btn btn-outline-success">EDIT SOCIAL</a>
+      <a href="" class="btn btn-danger">DELETE SOCIAL</a>
+    </div>
+    {% endif %}
+  </header>
+  <hr>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>Youtube</strong>
+      <span class="float-right">{{social.youtube}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Facebook</strong>
+      <span class="float-right">{{social.facebook}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Twitter</strong>
+      <span class="float-right">{{social.twitter}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>LinkedIn</strong>
+      <span class="float-right">{{social.linkedin}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Instagram</strong>
+      <span class="float-right">{{social.instagram}}</span>
+    </li>
+    <li class="list-group-item">
+      <strong>Github</strong>
+      <span class="float-right">{{social.github}}</span>
+    </li>
+  </ul>
+</div>
+{% endblock content %}

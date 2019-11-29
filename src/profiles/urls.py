@@ -14,7 +14,9 @@ from .views import (
     ExperienceCreateView,
     ExperienceDetailView,
     ExperienceUpdateView,
-    ExperienceDeleteView
+    ExperienceDeleteView,
+    SocialCreateView,
+    SocialDetailView
 )
 
 app_name = 'profiles'
@@ -63,6 +65,16 @@ urlpatterns = [
         '<int:id>/experiences/create',
         ExperienceCreateView.as_view(),
         name='experiences-create'
+    ),
+    path(
+        '<int:id>/socials',
+        SocialDetailView.as_view(),
+        name='socials-detail'
+    ),
+    path(
+        '<int:id>/socials/create',
+        SocialCreateView.as_view(),
+        name='socials-create'
     ),
     path(
         '<int:profile_id>/educations/<int:education_id>/detail',
