@@ -356,7 +356,7 @@ class ExperienceUpdateView(
     )
 
 
-# Experience DELETE VIEW
+# EXPERIENCE DELETE VIEW
 class ExperienceDeleteView(
   LoginRequiredMixin,
   ExperienceProfileObjectMixin,
@@ -389,7 +389,7 @@ class SocialObjectMixin(object):
   model = Social
 
   def get_object(self, *args, **kwargs):
-    return Social.objects.get_social_object(self.kwargs.get('id'), self.request.user)
+    return Social.objects.get_social_object(self.kwargs.get('id'))
 
 
 # SOCIAL CREATE VIEW
@@ -404,9 +404,11 @@ class SocialCreateView(LoginRequiredMixin, ProfileObjectMixin, CreateView):
     return super(SocialCreateView, self).form_valid(form)
 
   def get_context_data(self, *args, **kwargs):
-    context = super(SocialCreateView, self).get_context_data(*args, **kwargs)
-    context['title'] = 'Socials'
-    return context
+    if self.get_object():
+      context = super(SocialCreateView, self).get_context_data(*args, **kwargs)
+      context['title'] = 'Socials'
+      context['profile'] = self.get_object()
+      return context
 
 
 # SOCIAL DETAIL VIEW
@@ -419,4 +421,53 @@ class SocialDetailView(LoginRequiredMixin, SocialObjectMixin, DetailView):
     context = super(SocialDetailView, self).get_context_data(*args, **kwargs)
     context['title'] = 'Social Detail'
     return context
+
+
+# SOCIAL UPDATE VIEW
+class SocialUpdateView(
+  LoginRequiredMixin,
+  SocialObjectMixin,
+  UpdateView
+):
+  queryset = Social.objects.all()
+  context_object_name = 'social'
+  template_name = 'socials/social_update.html'
+  form_class = SocialForm
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(SocialUpdateView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Social Update'
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, 'Social page has been successfully updated!')
+    return reverse(
+      'profiles:socials-detail',
+      kwargs={'id': self.get_object().profile.pk}
+    )
+
+
+# SOCIAL DELETE VIEW
+class SocialDeleteView(
+  LoginRequiredMixin,
+  SocialObjectMixin,
+  DeleteView
+):
+  queryset = Social.objects.all()
+  context_object_name = 'social'
+  template_name = 'socials/social_delete.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(SocialDeleteView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Social Delete'
+    return context
+
+  def get_success_url(self, *args, **kwargs):
+    messages.success(self.request, "Social page has been successfully deleted! Let's create one")
+    return reverse(
+      'profiles:socials-create',
+      kwargs={
+        'id': self.kwargs.get('id'),
+      }
+    )
 

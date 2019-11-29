@@ -22,7 +22,13 @@
       <div class="btn-group">
         <a href="{{profile.get_experience_url}}" class="btn btn-outline-primary">EXPERIENCES</a>
         <a href="{{profile.get_education_url}}" class="btn btn-dark">EDUCATIONS</a>
+        {% if profile.social %}
+        <a href="{{profile.social.get_absolute_url}}" class="btn btn-outline-info">SOCIAL PAGE</a>
+        {% else %}
+        {% if user.is_authenticated and profile.user == user %}
         <a href="{{profile.get_social_create_url}}" class="btn btn-outline-info">SOCIAL PAGE</a>
+        {% endif %}
+        {% endif %}
       </div>
     </div>
     <div class=""></div>

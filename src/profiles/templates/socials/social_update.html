@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="social-update" style="width: 60%; margin:auto">
+  <header class="page-header d-flex">
+    <h3 class="page-heading">Update Social</h3>
+  </header>
+  <hr>
+  <div class="social-update-form">
+    <form action="" method="POST"> {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success btn-lg">UPDATE SOCIAL</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

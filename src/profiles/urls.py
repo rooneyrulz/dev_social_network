@@ -16,7 +16,9 @@ from .views import (
     ExperienceUpdateView,
     ExperienceDeleteView,
     SocialCreateView,
-    SocialDetailView
+    SocialDetailView,
+    SocialUpdateView,
+    SocialDeleteView
 )
 
 app_name = 'profiles'
@@ -75,6 +77,16 @@ urlpatterns = [
         '<int:id>/socials/create',
         SocialCreateView.as_view(),
         name='socials-create'
+    ),
+    path(
+        '<int:id>/socials/update',
+        SocialUpdateView.as_view(),
+        name='socials-update'
+    ),
+    path(
+        '<int:id>/socials/delete',
+        SocialDeleteView.as_view(),
+        name='socials-delete'
     ),
     path(
         '<int:profile_id>/educations/<int:education_id>/detail',

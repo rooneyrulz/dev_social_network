@@ -217,8 +217,8 @@ class Experience(models.Model):
 
 # SOCIAL MODEL MANAGER
 class SocialManager(models.Manager):
-  def get_social_object(self, profile, user):
-    return get_object_or_404(self.model, profile=profile, pk=user.profile.social.pk)
+  def get_social_object(self, profile):
+    return get_object_or_404(self.model, profile=profile)
 
 
 # SOCIAL MODEL
@@ -240,3 +240,9 @@ class Social(models.Model):
 
   def get_absolute_url(self, *args, **kwargs):
     return reverse('profiles:socials-detail', kwargs={'id': self.profile.pk})
+  
+  def get_update_url(self, *args, **kwargs):
+    return reverse('profiles:socials-update', kwargs={'id': self.profile.pk})
+
+  def get_delete_url(self, *args, **kwargs):
+    return reverse('profiles:socials-delete', kwargs={'id': self.profile.pk})

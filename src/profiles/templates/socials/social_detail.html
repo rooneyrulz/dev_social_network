@@ -6,8 +6,8 @@
     <h3 class="page-heading">Social Page</h3>
     {% if user.is_authenticated and social.profile == user.profile %}
     <div class="btn-group">
-      <a href="" class="btn btn-outline-success">EDIT SOCIAL</a>
-      <a href="" class="btn btn-danger">DELETE SOCIAL</a>
+      <a href="{{social.get_update_url}}" class="btn btn-outline-success">EDIT SOCIAL</a>
+      <a href="{{social.get_delete_url}}" class="btn btn-danger">DELETE SOCIAL</a>
     </div>
     {% endif %}
   </header>
@@ -15,27 +15,27 @@
   <ul class="list-group">
     <li class="list-group-item">
       <strong>Youtube</strong>
-      <span class="float-right">{{social.youtube}}</span>
+      <a href={{social.youtube}} style="text-decoration:none" class="float-right">{{social.youtube}}</a>
     </li>
     <li class="list-group-item">
       <strong>Facebook</strong>
-      <span class="float-right">{{social.facebook}}</span>
+      <a href={{social.facebook}} style="text-decoration:none" class="float-right">{{social.facebook}}</a>
     </li>
     <li class="list-group-item">
       <strong>Twitter</strong>
-      <span class="float-right">{{social.twitter}}</span>
+      <a href={{social.twitter}} style="text-decoration:none" class="float-right">{{social.twitter}}</a>
     </li>
     <li class="list-group-item">
       <strong>LinkedIn</strong>
-      <span class="float-right">{{social.linkedin}}</span>
+      <a href={{social.linkedin}} style="text-decoration:none" class="float-right">{{social.linkedin}}</a>
     </li>
     <li class="list-group-item">
       <strong>Instagram</strong>
-      <span class="float-right">{{social.instagram}}</span>
+      <a href={{social.instagram}} style="text-decoration:none" class="float-right">{{social.instagram}}</a>
     </li>
     <li class="list-group-item">
       <strong>Github</strong>
-      <span class="float-right">{{social.github}}</span>
+      <a href={{social.github}} style="text-decoration:none" class="float-right">{{social.github}}</a>
     </li>
   </ul>
 </div>

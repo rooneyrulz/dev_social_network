@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="social-delete">
+  <header class="page-header d-flex">
+    <h3 class="page-heading text-muted">Privacy Zone</h3>
+  </header>
+  <hr>
+  <div class="card border-danger">
+    <div class="card-header">
+      <h4><a style="text-decoration: none;" href="{{social.get_absolute_url}}">Social Page</a></h4>
+    </div>
+    <div class="card-body">
+      <p class="lead">Do you wanna delete the social page?</p>
+      <form action="" method="POST">{% csrf_token %}
+        <div class="btn-group">
+          <button type="submit" class="btn btn-danger">YES</button>
+          <a href="{{social.get_absolute_url}}" class="btn btn-dark">NO</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
