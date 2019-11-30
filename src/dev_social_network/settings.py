@@ -69,6 +69,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+
 WSGI_APPLICATION = 'dev_social_network.wsgi.application'
 
 
