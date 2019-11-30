@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.conf import settings
 
 from posts.models import Post
+
+User = get_user_model()
 
 
 # UNLIKE MANAGER
@@ -24,7 +26,7 @@ class Unlike(models.Model):
     on_delete=models.CASCADE
   )
   owner = models.ForeignKey(
-    settings.AUTH_USER_MODEL,
+    User,
     default=1,
     on_delete=models.CASCADE
   )

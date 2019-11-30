@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.views.generic import View, CreateView
 from django.contrib import messages
 from django.urls import reverse
 
 from .forms import RegisterForm, LoginForm
+
+User = get_user_model()
 
 
 # REGISTRATION VIEW
@@ -29,11 +31,9 @@ class RegisterView(CreateView):
 class LoginView(View):
   form = LoginForm
   template_name = 'accounts/login.html'
-  next_uri = None
   context = {}
 
   def get(self, request, *args, **kwargs):
-    self.next_uri = request.GET.get('next')
     form = self.form()
     self.context['title'] = 'Login'
     self.context['form'] = form
@@ -42,17 +42,10 @@ class LoginView(View):
   def post(self, request, *args, **kwargs):
     form = self.form(request.POST)
     if form.is_valid():
-      print(form.cleaned_data)
-      username = form.cleaned_data.get('username')
-      password = form.cleaned_data.get('password')
-      user = authenticate(username=username, password=password)
+      user = form.cleaned_data.get('user_obj')
       login(request, user)
-      messages.success(request, 'User has been logged in!')
-      if self.next_uri:
-        return redirect(self.next)
-      else:
-        return redirect('/dev/dashboard')
-    
+      messages.success(request, 'Yay! You just logged in!')
+      return redirect(reverse('pages:dashboard-view'))
     self.context['title'] = 'Login'
     self.context['form'] = form
     return render(request, self.template_name, self.context)

@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.conf import settings
 
+User = get_user_model()
 
 # POST MANAGER
 class PostManager(models.Manager):
@@ -25,7 +26,7 @@ class Post(models.Model):
   description = models.TextField()
   created_at = models.DateTimeField(auto_now_add=True)
   owner = models.ForeignKey(
-    settings.AUTH_USER_MODEL,
+    User,
     default=1,
     on_delete=models.CASCADE,
     null=True

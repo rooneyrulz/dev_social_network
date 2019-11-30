@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.conf import settings
 from django.urls import reverse
 from datetime import datetime
+
+User  = get_user_model()
 
 
 GENDER_CHOICES = [
@@ -57,7 +59,7 @@ class ProfileManager(models.Manager):
 # PROFILE MODEL
 class Profile(models.Model):
   user = models.OneToOneField(
-    settings.AUTH_USER_MODEL,
+    User,
     default=1,
     on_delete=models.CASCADE
   )
